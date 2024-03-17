@@ -6,17 +6,18 @@ tailwind を複数のリポジトリで共有するため、Turbo に tailwind �
 
 ### 1. tailwind 用のフォルダとファイルを追加  
 
-```bash
-cd packages/
-mkdir tailwind-config
+- フォルダとファイルを生成
 
-cd tailwind-config
-touch package.json
-touch tailwind.config.ts
-touch tsconfig.json
+```bash
+npm init -y -w packages/config/tailwind-config
+
+touch packages/config/tailwind-config/tailwind.config.ts
+touch packages/config/tailwind-config/tsconfig.json
 ```
 
-`packages/tailwind-config/package.json`
+- package.json を修正
+
+`packages/config/tailwind-config/package.json`
 
 ```json
 {
@@ -28,12 +29,13 @@ touch tsconfig.json
   },
   "devDependencies": {
     "@repo/typescript-config": "*",
-    "tailwindcss": "^3.4.0"
   }
 }
 ```
 
-`packages/tailwind-config/tailwind.config.ts`
+- tailwind.config.ts を修正
+
+`packages/config/tailwind-config/tailwind.config.ts`
 
 ```js
 import type { Config } from "tailwindcss";
@@ -53,7 +55,9 @@ const config: Omit<Config, "content"> = {
 export default config;
 ```
 
-`packages/tailwind-config/tsconfig.json`
+- tsconfig.json を修正
+
+`packages/config/tailwind-config/tsconfig.json`
 
 ```json
 {
@@ -67,14 +71,8 @@ export default config;
 
 ```bash
 # currently under <Project name> directory
-cd packages/tailwind-config
-npm i
-```
-
-```bash
-# currently under <Project name>/packages/tailwind-config directory
-cd ../../
-npm install -D postcss@latest autoprefixer@latest
+npm -w packages/config/tailwind-config install --save-dev tailwindcss postcss autoprefixer
+npm -w packages/config/tailwind-config install tailwindcss-animate
 ```
 
 ### 3. web に、tailwind.config と postcss.config を追加
@@ -113,7 +111,7 @@ Lintエラーが発生するため、Lint対象から`postcss.config.js`を除�
 
 `.eslintignore`
 
-```
+```eslintignore
 apps/web/postcss.config.js
 ```
 
@@ -139,33 +137,9 @@ import '@/styles/globals.css';
 > - apps/web/app/globals.css
 > - apps/web/app/page.module.css
 
-## packages/config に config 関連のパッケージをまとめる
+### 6. パッケージを再インストール
 
-### 1. config フォルダにパッケージを移動
-
-eslint-config, typescript-config, tailwind-config のフォルダを、`config`フォルダ直下に移動する。
-
-```sh
-packages/
-  ├ config/
-     ├ eslint-config/
-     ├ tailwind-config/
-     ├ typescript-config/
-```
-
-### 2. ワークスペースに、packages/config を追加
-
-`package.json`
-
-```json
-  "workspaces": [
-    "apps/*",
-    "packages/*",
-+   "packages/config/*"
-  ]
-```
-
-### 3. パッケージを再インストール
+ルートディレクトリで`npm i`を実行し、`@repo/tailwind-config`を他プロジェクトで利用できるようにする。
 
 ```bash
 # currently under <Project name> directory

@@ -86,7 +86,30 @@ We suggest that you begin by typing:
   npx turbo login
 ```
 
-### 3. NestJS を追加
+### 3. packages/config に config 関連のパッケージをまとめる
+
+- eslint-config, typescript-config のフォルダを、`config`フォルダ直下に移動
+
+```sh
+packages/
+  ├ config/
+     ├ eslint-config/
+     ├ typescript-config/
+```
+
+- ワークスペースに、packages/config を追加
+
+`package.json`
+
+```json
+  "workspaces": [
+    "apps/*",
+    "packages/*",
++   "packages/config/*"
+  ]
+```
+
+### 4. NestJS を追加
 
 ```bash
 # -yオプションは、対話形式のプロンプトをスキップしてデフォルト設定
@@ -154,7 +177,7 @@ rm -rf .git
   }
 ```
 
-### 4. tsconfig.json に、エイリアスパスを追加
+### 5. tsconfig.json に、エイリアスパスを追加
 
 `apps/web/tsconfig.json`
 

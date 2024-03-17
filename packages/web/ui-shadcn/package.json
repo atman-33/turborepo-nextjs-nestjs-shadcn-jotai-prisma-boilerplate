@@ -1,0 +1,28 @@
+{
+  "name": "@repo/web-ui-shadcn",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "ui:add": "npx shadcn-ui@latest add",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/tailwind-config": "*",
+    "@repo/typescript-config": "*",
+    "@types/node": "^20.11.28",
+    "@types/react": "^18.2.66",
+    "typescript": "^5.4.2"
+  },
+  "dependencies": {
+    "@radix-ui/react-slot": "^1.0.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "lucide-react": "^0.358.0",
+    "tailwind-merge": "^2.2.2"
+  },
+  "exports": {
+    "./lib/*": "./src/lib/*.ts",
+    "./components/*": "./src/components/*.tsx"
+  }
+}

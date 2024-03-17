@@ -25,6 +25,7 @@
     "apps/*",
     "packages/*",
     "packages/config/*",
-    "packages/shared/*"
+    "packages/shared/*",
+    "packages/web/*"
   ]
 }
