@@ -138,3 +138,36 @@ import '@/styles/globals.css';
 > デフォルトで作成されている`globals.css`と`page.module.css`は不要のため削除
 > - apps/web/app/globals.css
 > - apps/web/app/page.module.css
+
+## packages/config に config 関連のパッケージをまとめる
+
+### 1. config フォルダにパッケージを移動
+
+eslint-config, typescript-config, tailwind-config のフォルダを、`config`フォルダ直下に移動する。
+
+```sh
+packages/
+  ├ config/
+     ├ eslint-config/
+     ├ tailwind-config/
+     ├ typescript-config/
+```
+
+### 2. ワークスペースに、packages/config を追加
+
+`package.json`
+
+```json
+  "workspaces": [
+    "apps/*",
+    "packages/*",
++   "packages/config/*"
+  ]
+```
+
+### 3. パッケージを再インストール
+
+```bash
+# currently under <Project name> directory
+npm i
+```
