@@ -24,6 +24,7 @@
   "workspaces": [
     "apps/*",
     "packages/*",
-    "packages/config/*"
+    "packages/config/*",
+    "packages/shared/*"
   ]
 }
