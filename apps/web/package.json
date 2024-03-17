@@ -9,7 +9,7 @@
     "lint": "eslint . --max-warnings 0"
   },
   "dependencies": {
-    "@repo/ui": "*",
+    "@repo/web-ui": "*",
     "@repo/math-helpers": "*",
     "next": "^14.1.1",
     "react": "^18.2.0",

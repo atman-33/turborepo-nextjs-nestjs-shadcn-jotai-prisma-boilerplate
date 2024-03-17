@@ -7,7 +7,8 @@
     "dev:web": "turbo dev --filter=web",
     "dev:api": "turbo dev --filter=api",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "ui:add": "cd packages/web/ui && npx shadcn-ui@latest add"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

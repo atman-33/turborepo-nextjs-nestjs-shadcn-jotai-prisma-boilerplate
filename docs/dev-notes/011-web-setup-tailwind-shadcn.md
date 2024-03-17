@@ -16,7 +16,7 @@
 
 ### 1. パッケージ生成
 
-`packages/web/ui-shadcn`のパッケージを作成
+`packages/web/ui`のパッケージを作成
 
 ```bash
 npm init -y -w packages/web/ui-shadcn
@@ -24,29 +24,31 @@ npm init -y -w packages/web/ui-shadcn
 
 ### 2. package.json を変更
 
-- パッケージ名は、`@repo/web-ui-shadcn`に変更
+- パッケージ名は、`@repo/web-ui`に変更
 
-`packages/web/ui-shadcn/package.json`
+`packages/web/ui/package.json`
 
 ```json
 {
-  "name": "@repo/web-ui-shadcn",
-  "version": "1.0.0",
+  "name": "@repo/web-ui",
+  "version": "0.0.0",
   "private": true,
+  "exports": {
+    "./globals.css": "./src/globals.css",
+    "./postcss.config": "./postcss.config.js",
+    "./tailwind.config": "./tailwind.config.ts",
+    "./lib/*": "./src/lib/*.ts",
+    "./components/*": "./src/components/*.tsx"
+  },
   "scripts": {
-    "ui:add": "npx shadcn-ui@latest add",
+    "ui:add": "pnpm dlx shadcn-ui@latest add",
     "lint": "eslint ."
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
-    "@repo/tailwind-config": "*"
+    "@repo/typescript-config": "*"
   },
   "dependencies": {
-  },
-  "exports": {
-    "./lib/*": "./src/lib/*.ts",
-    "./components/*": "./src/components/*.tsx"
   }
 }
 ```
@@ -65,18 +67,18 @@ npm init -y -w packages/web/ui-shadcn
   ]
 ```
 
-> パッケージ生成時にデフォルトで追加される`packages/web/ui-shadcn`のみでも利用可能
+> パッケージ生成時にデフォルトで追加される`packages/web/ui`のみでも利用可能
 
 ### 4. 必要なパッケージをインストール
 
 ```bash
-npm -w packages/web/ui-shadcn install @radix-ui/react-slot class-variance-authority clsx lucide-react tailwind-merge
-npm -w packages/web/ui-shadcn install --save-dev @types/node @types/react typescript
+npm -w packages/web/ui install --save-dev @types/node @types/react autoprefixer postcss tailwindcss typescript
+npm -w packages/web/ui install @radix-ui/react-slot class-variance-authority clsx lucide-react tailwind-merge tailwindcss-animate
 ```
 
 ### 5. tsconfig.json を作成
 
-`packages/web/ui-shadcn/tsconfig.json`
+`packages/web/ui/tsconfig.json`
 
 ```json
 {
@@ -84,7 +86,7 @@ npm -w packages/web/ui-shadcn install --save-dev @types/node @types/react typesc
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@ui/*": ["./src/*"]
+      "@web-ui/*": ["./src/*"]
     }
   },
   "include": ["src"],
@@ -92,17 +94,38 @@ npm -w packages/web/ui-shadcn install --save-dev @types/node @types/react typesc
 }
 ```
 
-### 6. tailwind-config の tailwind.config.js を変更  
+### 6. postcss.config.js を作成
 
-`packages/config/tailwind-config/tailwind.config.ts`    
+`packages/web/ui/postcss.config.js`
+
+```js
+// eslint-disable-next-line no-undef
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+};
+```
+
+### 7. tailwind.config.js を作成  
+
+`packages/web/ui/tailwind.config.ts`    
 
 ```js: tailwind.config.ts
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 
-// We want each package to be responsible for its own content.
-const config: Omit<Config, "content"> = {
+const config = {
   darkMode: ["class"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./features/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+    "../../packages/ui/src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -170,11 +193,12 @@ const config: Omit<Config, "content"> = {
     },
   },
   plugins: [tailwindcssAnimate],
-};
+} satisfies Config;
+
 export default config;
 ```
 
-### 7. web の globals.css を変更
+### 8. globals.css を作成
 
 `apps/web/styles/globals.css`
 
@@ -257,12 +281,12 @@ export default config;
   }
   body {
     @apply bg-background text-foreground;
-    font-feature-settings: 'rlig' 1, 'calt' 1;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
 ```
 
-### 8. utils.ts を作成
+### 9. utils.ts を作成
 
 `packages/web/ui-shadcn/src/lib/utils.ts`
 
@@ -275,66 +299,61 @@ export function cn(...inputs: ClassValue[]) {
 }
 ```
 
-___________________________________________________________________________________________________
-___________________________________________________________________________________________________
-___________________________________________________________________________________________________
+### 10. components.json を作成
 
+`packages/web/ui/components.json`
 
-
-
-
-### 6. `components.json` を作成
-
- `components.json`
-
- ```json:components.json
- {
-  "$schema": "https://ui.shadcn.com/schema.json", 
-  "style": "default", 
-  "rsc": false, 
+```json:components.json
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "default",
+  "rsc": true,
   "tsx": true,
   "tailwind": {
-    "config": "apps/web/tailwind.config.js",
-    "css": "apps/web/src/styles/global.css",
+    "config": "tailwind.config.ts",
+    "css": "src/globals.css",
     "baseColor": "slate",
-    "cssVariables": true
-  }, 
+    "cssVariables": true,
+    "prefix": ""
+  },
   "aliases": {
-    "components": "@libs/web/ui-shadcn/components",
-    "utils": "@libs/web/ui-shadcn/lib/utils"
+    "components": "@web-ui/components",
+    "utils": "@web-ui/lib/utils"
   }
 }
 ```
 
-### 7. `tsconfig.base.json` に utils.ts のパスを追加
+### 11. web に、tailwind と shadcn を利用するための設定
 
-`tsconfig.base.json`
+`apps/web/package.json`
 
 ```json
-    "paths": {
-      ...,
-      "@libs/web/ui-shadcn/lib/utils": [
-        "libs/web/ui-shadcn/src/lib/utils.ts"
-      ],
-      ...,
-    }
+  "dependencies": {
+    "@repo/web-ui": "*",
+    ...
 ```
 
-### 8. shadcn-ui 用に、`tsconfig.json` を作成
+`apps/web/tailwind.config.ts`
 
- `tsconfig.json`
+```ts
+export * from "@repo/web-ui/tailwind.config";
+```
 
- ```json:tsconfig.json
- {
-  "compilerOptions": {
+`apps/web/postcss.config.js`
 
-    "baseUrl": ".",
-    "paths": {
-      "@libs/web/ui-shadcn": ["libs/web/ui-shadcn/src/index.ts"],
-      "@libs/web/ui-shadcn/*": ["libs/web/ui-shadcn/src/*"]
-    }
-  }
-} 
+```js
+module.exports = require('@repo/web-ui/postcss.config');
+```
+
+### 12. web に、globals.css をインポート
+
+最上位の layout に、 globals.css を適用
+
+`apps/web/app/layout.tsx`
+
+```tsx
+import '@repo/web-ui/globals.css';
+
 ```
 
 ## 利用方法
@@ -342,15 +361,9 @@ ________________________________________________________________________________
 ### 1. Button をインストール
 
 ```bash
+# currently under root directory
+cd packages/web/ui
 npx shadcn-ui@latest add button
-```
-
-### 2. index.tsにButtonのExportを追加
-
-`libs/web/ui-shadcn/src/index.ts`
-
-```ts
-export * from './components/ui/button';
 ```
 
 ### 2. 利用例
@@ -358,16 +371,15 @@ export * from './components/ui/button';
 e.g.  
 
 ```tsx
-import { Button } from '@/components/ui/button';
-import '@/styles/global.css';
+import { Button } from '@repo/web-ui/components/ui/button';
 
-function Home() {
+const Page = () => {
   return (
     <>
-      <Button variant="default" className="m-4">
-        ボタン
-      </Button>
+      <Button></Button>
     </>
   );
 }
+
+export default Page
 ```

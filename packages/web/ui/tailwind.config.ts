@@ -1,9 +1,16 @@
 import type { Config } from "tailwindcss";
 import tailwindcssAnimate from "tailwindcss-animate";
 
-// We want each package to be responsible for its own content.
-const config: Omit<Config, "content"> = {
+const config = {
   darkMode: ["class"],
+  content: [
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./features/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
+    "../../packages/ui/src/**/*.{ts,tsx}",
+  ],
   prefix: "",
   theme: {
     container: {
@@ -71,5 +78,6 @@ const config: Omit<Config, "content"> = {
     },
   },
   plugins: [tailwindcssAnimate],
-};
+} satisfies Config;
+
 export default config;
