@@ -387,6 +387,15 @@ export * from "./lib/utils";
     ...
 ```
 
+`apps/web/next.config.js`
+
+```js
+/** @type {import('next').NextConfig} */
+module.exports = {
+  transpilePackages: ["@repo/web-ui"],
+};
+```
+
 `apps/web/tailwind.config.ts`
 
 ```ts

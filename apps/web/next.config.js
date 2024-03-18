@@ -1,4 +1,4 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
-  transpilePackages: ["@repo/ui", "@repo/shared-math-helpers"],
+  transpilePackages: ["@repo/web-ui", "@repo/shared-math-helpers"],
 };
