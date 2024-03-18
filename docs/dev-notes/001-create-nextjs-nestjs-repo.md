@@ -86,6 +86,8 @@ We suggest that you begin by typing:
   npx turbo login
 ```
 
+> apps/docs は不要なため、削除してよい。
+
 ### 3. packages/config に config 関連のパッケージをまとめる
 
 - eslint-config, typescript-config のフォルダを、`config`フォルダ直下に移動
