@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@web-ui/*": [
+      "@ui/*": [
         "./src/*"
       ]
     }

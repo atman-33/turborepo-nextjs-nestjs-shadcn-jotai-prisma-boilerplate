@@ -33,22 +33,37 @@ npm init -y -w packages/web/ui-shadcn
   "name": "@repo/web-ui",
   "version": "0.0.0",
   "private": true,
-  "exports": {
-    "./globals.css": "./src/globals.css",
-    "./postcss.config": "./postcss.config.js",
-    "./tailwind.config": "./tailwind.config.ts",
-    "./lib/*": "./src/lib/*.ts",
-    "./components/*": "./src/components/*.tsx"
-  },
   "scripts": {
-    "ui:add": "pnpm dlx shadcn-ui@latest add",
     "lint": "eslint ."
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*"
+    "@repo/typescript-config": "*",
+    "@turbo/gen": "^1.12.4",
+    "@types/eslint": "^8.56.5",
+    "@types/node": "^20.11.28",
+    "@types/react": "^18.2.66",
+    "@types/react-dom": "^18.2.19",
+    "autoprefixer": "^10.4.18",
+    "eslint": "^8.57.0",
+    "postcss": "^8.4.35",
+    "react": "^18.2.0",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5.4.2"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.0.2",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "lucide-react": "^0.358.0",
+    "tailwind-merge": "^2.2.2",
+    "tailwindcss-animate": "^1.0.7"
+  },
+  "exports": {
+    "./globals.css": "./src/globals.css",
+    "./postcss.config": "./postcss.config.js",
+    "./tailwind.config": "./tailwind.config.ts",
+    ".": "./src/index.ts"
   }
 }
 ```
@@ -86,11 +101,17 @@ npm -w packages/web/ui install @radix-ui/react-slot class-variance-authority cls
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@web-ui/*": ["./src/*"]
+      "@ui/*": [
+        "./src/*"
+      ]
     }
   },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }
 ```
 
@@ -124,7 +145,7 @@ const config = {
     "./features/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
-    "../../packages/ui/src/**/*.{ts,tsx}",
+    "../../packages/web/ui/src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -317,13 +338,46 @@ export function cn(...inputs: ClassValue[]) {
     "prefix": ""
   },
   "aliases": {
-    "components": "@web-ui/components",
-    "utils": "@web-ui/lib/utils"
+    "components": "@ui/components",
+    "utils": "@repo/web-ui"
   }
 }
 ```
 
-### 11. web に、tailwind と shadcn を利用するための設定
+### 11. .eslintrc.js を作成
+
+`packages/web/ui/.eslintrc.js`
+
+```js
+/** @type {import("eslint").Linter.Config} */
+module.exports = {
+  root: true,
+  extends: ['@repo/eslint-config/react-internal.js'],
+  parser: '@typescript-eslint/parser',
+  rules: {
+    'no-redeclare': 'off',
+  },
+};
+```
+
+### 12. index.ts を作成
+
+`packages/web/ui/src/index.ts`
+
+```ts
+export * from "./lib/utils";
+```
+
+> shadcn コンポーネント追加時は、このファイルにexportを追加していく。
+
+e.g.  
+
+```ts
+export * from "./components/ui/button";
+export * from "./lib/utils";
+```
+
+### 13. web に、tailwind と shadcn を利用するための設定
 
 `apps/web/package.json`
 
@@ -345,9 +399,9 @@ export * from "@repo/web-ui/tailwind.config";
 module.exports = require('@repo/web-ui/postcss.config');
 ```
 
-### 12. web に、globals.css をインポート
+### 14. web に、globals.css をインポート
 
-最上位の layout に、 globals.css を適用
+最上位の layout に、 shadcn の globals.css を追加 
 
 `apps/web/app/layout.tsx`
 
@@ -358,6 +412,13 @@ import '@repo/web-ui/globals.css';
 
 ## 利用方法
 
+他のワークスペースでパッケージを利用するため、package.json の dependencies を変更した場合は、ルートディレクトリで npm インストールしておく。
+
+```bash
+# currently under root directory
+npm i
+```
+
 ### 1. Button をインストール
 
 ```bash
@@ -366,17 +427,25 @@ cd packages/web/ui
 npx shadcn-ui@latest add button
 ```
 
-### 2. 利用例
+### 2. index.tsにButtonのExportを追加
+
+`packages/web/ui/src/index.ts`
+
+```ts
+export * from './components/ui/button';
+```
+
+### 3. 利用例
 
 e.g.  
 
 ```tsx
-import { Button } from '@repo/web-ui/components/ui/button';
+import { Button } from '@repo/web-ui';
 
 const Page = () => {
   return (
     <>
-      <Button></Button>
+      <Button>ボタン</Button>
     </>
   );
 }
