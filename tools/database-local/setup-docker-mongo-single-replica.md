@@ -23,10 +23,10 @@ docker run --name docker-mongo --restart always \
       -d prismagraphql/mongo-single-replica:5.0.3
 ```
 
-### 3. Setup the connection URL to `.env.local`
+### 3. Setup the connection URL to `.env`
 
 ```env
-DB_URL="mongodb://monty:pass@localhost:27017/db_name?authSource=admin&directConnection=true"
+DATABASE_URL="mongodb://monty:pass@localhost:27017/db_name?authSource=admin&directConnection=true"
 ```
 
 > Replace `db_name` with the name of your database, if it doesn't exist it will be created automatically.
@@ -34,5 +34,5 @@ DB_URL="mongodb://monty:pass@localhost:27017/db_name?authSource=admin&directConn
 e.g. If you use `mongo_dev` name, write the following.
 
 ```env
-DB_URL="mongodb://monty:pass@localhost:27017/mongo_dev?authSource=admin&directConnection=true"
+DATABASE_URL="mongodb://monty:pass@localhost:27017/mongo_dev?authSource=admin&directConnection=true"
 ```

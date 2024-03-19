@@ -1,0 +1,45 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    // provider = "postgresql"
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+generator nestgraphql {
+    provider                = "node node_modules/prisma-nestjs-graphql"
+    output                  = "./@generated"
+    noAtomicOperations      = true
+    combineScalarFilters    = true
+    reExport                = Single
+    emitSingle              = false
+    emitCompiled            = false
+    purgeOutput             = false
+    // field validator
+    fields_Validator_from   = "class-validator"
+    fields_Validator_input  = true
+    fields_Validator_output = true
+    fields_Validator_model  = true
+    // Args where|data nested validator
+    decorate_1_type         = "*Args"
+    decorate_1_field        = "@(data|where)"
+    decorate_1_name         = ValidateNested
+    decorate_1_from         = "class-validator"
+    decorate_1_arguments    = "[]"
+}
+
+// ---- dummy for mongo db --------------------------------------- //
+model Dummy {
+    // id    String  @id
+    id    String  @id @default(auto()) @map("_id") @db.ObjectId
+    text  String?
+    int   Int?
+    float Float?
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @default(now()) @updatedAt
+}
+
+// -------------------------------------------------------------- // 
