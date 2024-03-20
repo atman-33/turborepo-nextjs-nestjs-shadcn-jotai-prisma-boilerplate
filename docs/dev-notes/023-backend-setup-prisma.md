@@ -24,13 +24,11 @@ npm -w packages/api/data-access-db install -D typescript prisma env-cmd prisma-n
   "name": "@repo/api-data-access-db",
 ```
 
-- main を、exports に変更
+- main と types を修正
 
 ```json
--  "main": "./index.js"
-+  "exports": {
-+    ".": "./src/index.ts"
-+  },
+  "main:": "./src/index.ts",
+  "types": "./src/index.ts",
 ```
 
 - devDependencies を追加

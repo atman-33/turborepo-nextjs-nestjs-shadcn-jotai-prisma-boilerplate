@@ -13,7 +13,7 @@ npm init -y -w packages/shared/env-handler
 ## 2. package.json を修正
 
 - name を変更
-- main を exports に変更
+- main と types を修正
 - typescript-config 参照を追加
 - private: true を追加
 
@@ -22,9 +22,8 @@ npm init -y -w packages/shared/env-handler
 ```json
   "name": "@repo/shared-env-handler",
   ...,
-  "exports": {
-    ".": "./src/index.ts"
-  },
+  "main:": "./src/index.ts",
+  "types": "./src/index.ts",
   ...,
   "devDependencies": {
     "@repo/typescript-config": "*"
