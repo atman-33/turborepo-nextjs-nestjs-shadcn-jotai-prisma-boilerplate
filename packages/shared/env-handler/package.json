@@ -1,0 +1,16 @@
+{
+  "name": "@repo/shared-env-handler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./src/index.ts",
+  "devDependencies": {
+    "@repo/typescript-config": "*"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "private":"true"
+}

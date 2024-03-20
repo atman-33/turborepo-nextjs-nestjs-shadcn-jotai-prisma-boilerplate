@@ -24,7 +24,7 @@ echo "public-hoist-pattern[]=*prisma*" >> .npmrc
 - main を変更
 
 ```json
-  "main": "./src/index.js",
+  "main": "./src/index.ts",
 ```
 
 - devDependencies を追加
@@ -111,7 +111,7 @@ generator nestgraphql {
 `packages/api/data-access-db/src/index.ts`
 
 ```ts
-export * from './lib/@generated/index';
+export * from './lib/@generated';
 export { PrismaModule } from './lib/prisma.module';
 export { PrismaService } from './lib/prisma.service';
 ```
@@ -179,6 +179,15 @@ npm run db:migrate:dev
 
 ```bash
 npm run db:generate
+```
+
+### 12. api で data-access-db を利用するための参照を追加
+
+`apps/api/package.json`
+
+```json
+  "dependencies": {
+    "@repo/api-data-access-db": "*",
 ```
 
 ## その他

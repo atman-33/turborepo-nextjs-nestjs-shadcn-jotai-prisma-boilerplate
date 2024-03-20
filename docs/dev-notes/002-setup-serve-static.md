@@ -38,4 +38,4 @@ Nestjsプロジェクトに`ServeStaticModule`を追加
     }),
 ```
 
-これで、`api`起動後、Nextjs アプリにアクセス可能となる。
+以上により、`api`と`web`をビルド後に`api`を起動すると、Nextjs アプリにアクセス可能となる。

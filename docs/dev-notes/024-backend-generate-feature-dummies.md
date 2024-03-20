@@ -47,6 +47,8 @@ nest g resource api/dummies --no-spec
     "@repo/api-data-access-db": "*",
 ```
 
+> 追加されていない場合は追加しておく必要あり
+
 ### 4. dummies.module.ts を修正
 
 - PrismaModule を追加
