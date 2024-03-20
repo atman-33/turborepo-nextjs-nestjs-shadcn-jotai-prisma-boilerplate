@@ -88,6 +88,28 @@ We suggest that you begin by typing:
 
 > apps/docs は不要なため、削除してよい。
 
+### 2. Next.js のアプリケーションコードをsrcフォルダ直下に移動
+
+- `src`フォルダを作成
+
+```bash
+mkdir apps/web/src
+```
+
+- `app`フォルダを`src`フォルダ直下に移動
+
+- tsconfig.json の path を変更
+
+`apps/web/tsconfig.json`
+
+```json
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    }
+```
+
 ### 3. packages/config に config 関連のパッケージをまとめる
 
 - eslint-config, typescript-config のフォルダを、`config`フォルダ直下に移動
@@ -205,7 +227,7 @@ rm -rf .git
   "compilerOptions": {
     ...,
     "paths": {
-      "@api/*": [
+      "@/*": [
         "./src/*"
       ],
     }

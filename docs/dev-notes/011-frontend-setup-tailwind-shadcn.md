@@ -221,7 +221,7 @@ export default config;
 
 ### 8. globals.css を作成
 
-`apps/web/styles/globals.css`
+`packages/web/ui/src/globals.css`
 
 ```css: globals.css
 @tailwind base;
