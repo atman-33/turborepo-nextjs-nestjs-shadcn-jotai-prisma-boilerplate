@@ -65,28 +65,17 @@ export class DummiesModule {}
 
 修正ファイルは下記。詳細はファイルを参照のこと。
 
-- `apps/api/src/api/dummies/dummies.service.ts`
 - `apps/api/src/api/dummies/dummies.resolver.ts`
-
+- `apps/api/src/api/dummies/dummies.service.ts`
+- `apps/api/src/api/dummies/models/dummy.model.ts`
+- `apps/api/src/api/dummies/dto/args/get-dummy-args.dto.ts`
+- `apps/api/src/api/dummies/dto/input/create-dummy-input.dto.ts`
+- `apps/api/src/api/dummies/dto/input/delete-dummy-input.dto.ts`
+- `apps/api/src/api/dummies/dto/input/update-dummy-input.dto.ts`
 
 > `service`ファイルで利用している`prisma`では、別テーブルとリレーションを利用してデータ操作する場合、`include`を利用することに注意
 
-
-
-
-
-
-
-
-
-### 6. dummies.service.ts を修正
-
-詳細は下記ファイルを参照
-
-
-
-
-### 7. AppModule に DummiesModule を追加
+### 6. AppModule に DummiesModule を追加
 
 `apps/api/src/app/app.module.ts`
 
