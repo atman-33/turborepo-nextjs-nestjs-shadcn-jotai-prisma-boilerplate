@@ -52,7 +52,7 @@ echo "public-hoist-pattern[]=*prisma*" >> .npmrc
 
 ### 4. .env にDB接続パスを追加
 
-`.env`
+`.env.local`
 
 e.g.  
 
@@ -136,14 +136,32 @@ export { PrismaService } from './lib/prisma.service';
 ```json
   "scripts": {
     "----DB SECTION----": "-------------------------",
-    "db:migrate:dev": "npx env-cmd -f .env npx prisma migrate dev",
-    "db:push:dev": "npx env-cmd -f .env npx prisma db push",
-    "db:generate": "npx env-cmd -f .env npx prisma generate",
-    "db:studio": "npx env-cmd -f .env npx prisma studio",
+    "db:migrate:dev": "npx env-cmd -f .env.local npx prisma migrate dev",
+    "db:push:dev": "npx env-cmd -f .env.local npx prisma db push",
+    "db:generate": "npx env-cmd -f .env.local npx prisma generate",
+    "db:studio": "npx env-cmd -f .env.local npx prisma studio",
   },
 ```
 
-###  9. prisma マイグレーション
+### 9. ルートディレクトリの turbo.json を変更
+
+- pipeline に下記を追加
+
+```json
+  "pipeline": {
+    ...,
+    "db:migrate:dev": {
+      "cache": false
+    },
+    "db:push:dev": {
+      "cache": false
+    },
+    "db:generate": {
+      "cache": false
+    }
+```
+
+### 10. prisma マイグレーション
 
 マイグレーション実行で、DBテーブルを生成する。
 
@@ -155,7 +173,7 @@ npm run db:migrate:dev
 
 > もしデータをリセットする場合、先にマイグレーションフォルダを削除してから、マイグレーションコマンドを実行すること。
 
-### 10. prisma generate
+### 11. prisma generate
 
 `prisma generate` コマンド実行で、スキーマに定義したモデルのTypeファイル等を生成する。
 
