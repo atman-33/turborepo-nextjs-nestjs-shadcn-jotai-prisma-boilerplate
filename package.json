@@ -14,7 +14,8 @@
     "db:generate": "npx env-cmd -f .env.local npx prisma generate",
     "db:studio": "npx env-cmd -f .env.local npx prisma studio",
     "----TOOLS SECTION----": "-------------------------",
-    "ui:add": "npm run -w @repo/web-ui ui:add"
+    "ui:add": "npm run -w @repo/web-ui ui:add",
+    "schema-codegen": "npx ts-node tools/schema-codegen/index.ts"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",

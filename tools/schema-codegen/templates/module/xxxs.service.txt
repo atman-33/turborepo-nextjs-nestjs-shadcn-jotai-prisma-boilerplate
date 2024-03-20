@@ -1,0 +1,36 @@
+import { PrismaService } from '@repo/api-data-access-db';
+import { Injectable } from '@nestjs/common';
+import { Get__model__Args } from './dto/args/get-__model_kebab__-args.dto';
+import { Create__model__Input } from './dto/input/create-__model_kebab__-input.dto';
+import { Delete__model__Input } from './dto//input/delete-__model_kebab__-input.dto';
+import { Update__model__Input } from './dto/input/update-__model_kebab__-input.dto';
+
+@Injectable()
+export class __model_plural__Service {
+  constructor(private readonly prisma: PrismaService) {}
+
+  async get__model_plural__() {
+    return await this.prisma.__model_camel__.findMany();
+  }
+
+  async get__model__(get__model__Args: Get__model__Args) {
+    return await this.prisma.__model_camel__.findUnique({ where: get__model__Args.where });
+  }
+
+  async create__model__(create__model__Data: Create__model__Input) {
+    return await this.prisma.__model_camel__.create({ data: create__model__Data.data });
+  }
+
+  async update__model__(update__model__Data: Update__model__Input) {
+    return await this.prisma.__model_camel__.update({
+      where: update__model__Data.where,
+      data: update__model__Data.data,
+    });
+  }
+
+  async delete__model__(delete__model__Data: Delete__model__Input) {
+    return await this.prisma.__model_camel__.delete({
+      where: delete__model__Data.where,
+    });
+  }
+}

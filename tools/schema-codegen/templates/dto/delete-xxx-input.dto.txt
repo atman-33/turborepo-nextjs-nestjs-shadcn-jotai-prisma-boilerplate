@@ -1,0 +1,1 @@
+export { DeleteOne__model__Args as Delete__model__Input } from '@repo/api-data-access-db';

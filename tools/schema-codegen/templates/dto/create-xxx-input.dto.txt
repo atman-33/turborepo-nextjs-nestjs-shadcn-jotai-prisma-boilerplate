@@ -1,0 +1,1 @@
+export { CreateOne__model__Args as Create__model__Input } from '@repo/api-data-access-db';

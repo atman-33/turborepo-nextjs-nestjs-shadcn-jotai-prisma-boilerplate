@@ -1,0 +1,1 @@
+export { UpdateOne__model__Args as Update__model__Input } from '@repo/api-data-access-db';
