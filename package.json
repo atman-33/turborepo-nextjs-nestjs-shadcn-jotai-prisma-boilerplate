@@ -35,7 +35,7 @@
     "packages/config/*",
     "packages/shared/*",
     "packages/web/*",
-    "packages/api/data-access-db"
+    "packages/api/*"
   ],
   "prisma": {
     "schema": "packages/api/data-access-db/src/lib/schema.prisma"

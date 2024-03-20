@@ -1,5 +1,9 @@
 # Prisma セットアップ
 
+## 参考URL
+
+[Turborepoを利用したmonorepo構成のNestJS+Prismaプロジェクトの構築](https://tech-blog.s-yoshiki.com/entry/296)
+
 ## ステップ
 
 ### 1. data-access-db パッケージを追加
@@ -7,8 +11,7 @@
 ```bash
 npm init -y -w packages/api/data-access-db
 npm -w packages/api/data-access-db install @prisma/client @nestjs/graphql graphql-type-json @nestjs/common
-npm -w packages/api/data-access-db install -D prisma env-cmd prisma-nestjs-graphql 
-echo "public-hoist-pattern[]=*prisma*" >> .npmrc
+npm -w packages/api/data-access-db install -D typescript prisma env-cmd prisma-nestjs-graphql 
 ```
 
 ### 2. package.json を変更
@@ -21,10 +24,13 @@ echo "public-hoist-pattern[]=*prisma*" >> .npmrc
   "name": "@repo/api-data-access-db",
 ```
 
-- main を変更
+- main を、exports に変更
 
 ```json
-  "main": "./src/index.ts",
+-  "main": "./index.js"
++  "exports": {
++    ".": "./src/index.ts"
++  },
 ```
 
 - devDependencies を追加

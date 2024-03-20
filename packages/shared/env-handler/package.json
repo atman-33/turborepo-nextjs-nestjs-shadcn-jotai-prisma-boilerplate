@@ -2,7 +2,9 @@
   "name": "@repo/shared-env-handler",
   "version": "1.0.0",
   "description": "",
-  "main": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts"
+  },
   "devDependencies": {
     "@repo/typescript-config": "*"
   },
