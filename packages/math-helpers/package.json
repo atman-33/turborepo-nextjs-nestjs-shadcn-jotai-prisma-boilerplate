@@ -1,5 +1,5 @@
 {
-  "name": "@repo/shared-math-helpers",
+  "name": "@repo/math-helpers",
   "exports": {
     ".": "./src/index.ts"
   },
