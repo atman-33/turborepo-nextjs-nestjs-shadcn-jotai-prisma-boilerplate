@@ -12,6 +12,7 @@
 npm init -y -w packages/api/data-access-db
 npm -w packages/api/data-access-db install @prisma/client @nestjs/graphql graphql-type-json @nestjs/common
 npm -w packages/api/data-access-db install -D typescript prisma env-cmd prisma-nestjs-graphql 
+echo "public-hoist-pattern[]=*prisma*" >> .npmrc
 ```
 
 ### 2. package.json を変更
