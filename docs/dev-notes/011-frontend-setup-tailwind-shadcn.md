@@ -14,86 +14,18 @@
 
 ## ステップ
 
-### 1. パッケージ生成
+### 1. 必要なパッケージをインストール
 
-`packages/web/ui`のパッケージを作成
-
-```bash
-npm init -y -w packages/web/ui-shadcn
-```
-
-### 2. package.json を変更
-
-- パッケージ名は、`@repo/web-ui`に変更
-
-`packages/web/ui/package.json`
-
-```json
-{
-  "name": "@repo/web-ui",
-  "version": "0.0.0",
-  "private": true,
-  "scripts": {
-    "lint": "eslint ."
-  },
-  "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
-    "@turbo/gen": "^1.12.4",
-    "@types/eslint": "^8.56.5",
-    "@types/node": "^20.11.28",
-    "@types/react": "^18.2.66",
-    "@types/react-dom": "^18.2.19",
-    "autoprefixer": "^10.4.18",
-    "eslint": "^8.57.0",
-    "postcss": "^8.4.35",
-    "react": "^18.2.0",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5.4.2"
-  },
-  "dependencies": {
-    "@radix-ui/react-slot": "^1.0.2",
-    "class-variance-authority": "^0.7.0",
-    "clsx": "^2.1.0",
-    "lucide-react": "^0.358.0",
-    "tailwind-merge": "^2.2.2",
-    "tailwindcss-animate": "^1.0.7"
-  },
-  "exports": {
-    "./globals.css": "./src/globals.css",
-    "./postcss.config": "./postcss.config.js",
-    "./tailwind.config": "./tailwind.config.ts",
-    ".": "./src/index.ts"
-  }
-}
-```
-
-### 3. packages/web フォルダ直下のパッケージを参照可能なように変更
-
-`package.json`
-
-```json
-  "workspaces": [
-    "apps/*",
-    "packages/*",
-    "packages/config/*",
-    "packages/shared/*",
-+   "packages/web/*"
-  ]
-```
-
-> パッケージ生成時にデフォルトで追加される`packages/web/ui`のみでも利用可能
-
-### 4. 必要なパッケージをインストール
+- `packages/ui`に必要なパッケージをインストール
 
 ```bash
-npm -w packages/web/ui install --save-dev @types/node @types/react autoprefixer postcss tailwindcss typescript
-npm -w packages/web/ui install @radix-ui/react-slot class-variance-authority clsx lucide-react tailwind-merge tailwindcss-animate
+npm -w packages/ui install --save-dev @types/node @types/react autoprefixer postcss tailwindcss typescript
+npm -w packages/ui install @radix-ui/react-slot class-variance-authority clsx lucide-react tailwind-merge tailwindcss-animate
 ```
 
-### 5. tsconfig.json を作成
+### 2. tsconfig.json に @ui/* の path を追加
 
-`packages/web/ui/tsconfig.json`
+`packages/ui/tsconfig.json`
 
 ```json
 {
@@ -106,18 +38,13 @@ npm -w packages/web/ui install @radix-ui/react-slot class-variance-authority cls
       ]
     }
   },
-  "include": [
-    "src"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  ...
 }
 ```
 
-### 6. postcss.config.js を作成
+### 3. postcss.config.js を作成
 
-`packages/web/ui/postcss.config.js`
+`packages/ui/postcss.config.js`
 
 ```js
 // eslint-disable-next-line no-undef
@@ -129,9 +56,9 @@ module.exports = {
 };
 ```
 
-### 7. tailwind.config.js を作成  
+### 4. tailwind.config.js を作成  
 
-`packages/web/ui/tailwind.config.ts`    
+`packages/ui/tailwind.config.ts`    
 
 ```js: tailwind.config.ts
 import type { Config } from "tailwindcss";
@@ -145,7 +72,7 @@ const config = {
     "./features/**/*.{ts,tsx}",
     "./app/**/*.{ts,tsx}",
     "./src/**/*.{ts,tsx}",
-    "../../packages/web/ui/src/**/*.{ts,tsx}",
+    "../../packages/ui/src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
@@ -219,9 +146,9 @@ const config = {
 export default config;
 ```
 
-### 8. globals.css を作成
+### 5. globals.css を作成
 
-`packages/web/ui/src/globals.css`
+`packages/ui/src/globals.css`
 
 ```css: globals.css
 @tailwind base;
@@ -307,9 +234,9 @@ export default config;
 }
 ```
 
-### 9. utils.ts を作成
+### 6. utils.ts を作成
 
-`packages/web/ui-shadcn/src/lib/utils.ts`
+`packages/ui-shadcn/src/lib/utils.ts`
 
 ```ts
 import { clsx, type ClassValue } from "clsx"
@@ -320,9 +247,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 ```
 
-### 10. components.json を作成
+### 7. components.json を作成
 
-`packages/web/ui/components.json`
+`packages/ui/components.json`
 
 ```json:components.json
 {
@@ -339,30 +266,14 @@ export function cn(...inputs: ClassValue[]) {
   },
   "aliases": {
     "components": "@ui/components",
-    "utils": "@repo/web-ui"
+    "utils": "@repo/ui"
   }
 }
 ```
 
-### 11. .eslintrc.js を作成
+### 8. index.ts を作成
 
-`packages/web/ui/.eslintrc.js`
-
-```js
-/** @type {import("eslint").Linter.Config} */
-module.exports = {
-  root: true,
-  extends: ['@repo/eslint-config/react-internal.js'],
-  parser: '@typescript-eslint/parser',
-  rules: {
-    'no-redeclare': 'off',
-  },
-};
-```
-
-### 12. index.ts を作成
-
-`packages/web/ui/src/index.ts`
+`packages/ui/src/index.ts`
 
 ```ts
 export * from "./lib/utils";
@@ -377,13 +288,27 @@ export * from "./components/ui/button";
 export * from "./lib/utils";
 ```
 
-### 13. web に、tailwind と shadcn を利用するための設定
+### 9. package.json に exports を追加
+
+`packages/ui/package.json`
+
+```json
+  ...,
+  "exports": {
+    "./globals.css": "./src/globals.css",
+    "./postcss.config": "./postcss.config.js",
+    "./tailwind.config": "./tailwind.config.ts",
+    ".": "./src/index.ts"
+  }
+```
+
+### 10. web に、tailwind と shadcn を利用するための設定
 
 `apps/web/package.json`
 
 ```json
   "dependencies": {
-    "@repo/web-ui": "*",
+    "@repo/ui": "*",
     ...
 ```
 
@@ -392,30 +317,30 @@ export * from "./lib/utils";
 ```js
 /** @type {import('next').NextConfig} */
 module.exports = {
-  transpilePackages: ["@repo/web-ui"],
+  transpilePackages: ["@repo/ui"],
 };
 ```
 
 `apps/web/tailwind.config.ts`
 
 ```ts
-export * from "@repo/web-ui/tailwind.config";
+export * from "@repo/ui/tailwind.config";
 ```
 
 `apps/web/postcss.config.js`
 
 ```js
-module.exports = require('@repo/web-ui/postcss.config');
+module.exports = require('@repo/ui/postcss.config');
 ```
 
-### 14. web に、globals.css をインポート
+### 11. web に、globals.css をインポート
 
 最上位の layout に、 shadcn の globals.css を追加 
 
 `apps/web/app/layout.tsx`
 
 ```tsx
-import '@repo/web-ui/globals.css';
+import '@repo/ui/globals.css';
 
 ```
 
@@ -432,13 +357,13 @@ npm i
 
 ```bash
 # currently under root directory
-cd packages/web/ui
+cd packages/ui
 npx shadcn-ui@latest add button
 ```
 
 ### 2. index.tsにButtonのExportを追加
 
-`packages/web/ui/src/index.ts`
+`packages/ui/src/index.ts`
 
 ```ts
 export * from './components/ui/button';
@@ -449,7 +374,7 @@ export * from './components/ui/button';
 e.g.  
 
 ```tsx
-import { Button } from '@repo/web-ui';
+import { Button } from '@repo/ui';
 
 const Page = () => {
   return (

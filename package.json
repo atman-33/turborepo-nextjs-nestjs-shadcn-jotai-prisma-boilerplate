@@ -14,7 +14,7 @@
     "db:generate": "npx env-cmd -f .env.local npx prisma generate",
     "db:studio": "npx env-cmd -f .env.local npx prisma studio",
     "----TOOLS SECTION----": "-------------------------",
-    "ui:add": "npm run -w @repo/web-ui ui:add",
+    "ui:add": "npm run -w @repo/ui ui:add",
     "schema-codegen": "npx ts-node tools/schema-codegen/index.ts"
   },
   "devDependencies": {
@@ -31,11 +31,7 @@
   "packageManager": "npm@10.5.0",
   "workspaces": [
     "apps/*",
-    "packages/*",
-    "packages/config/*",
-    "packages/shared/*",
-    "packages/web/*",
-    "packages/api/*"
+    "packages/*"
   ],
   "prisma": {
     "schema": "packages/api/data-access-db/src/lib/schema.prisma"
