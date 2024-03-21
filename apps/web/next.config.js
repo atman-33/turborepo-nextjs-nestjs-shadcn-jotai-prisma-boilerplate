@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
-  // NOTE: 自作パッケージは、transpilePackages に設定する
-  transpilePackages: ["@repo/web-ui", "@repo/shared-math-helpers"],
+  // NOTE: インターナルパッケージは、transpilePackages に設定する
+  transpilePackages: ["@repo/ui", "@repo/math-helpers"],
   images: {
     unoptimized: true,
   },

@@ -1,5 +1,5 @@
-import { add } from '@repo/shared-math-helpers';
-import { Button } from '@repo/web-ui';
+import { add } from '@repo/math-helpers';
+import { Button } from '@repo/ui';
 
 const Page = () => {
   return (
