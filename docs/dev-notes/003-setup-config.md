@@ -45,82 +45,68 @@ ___
 
 ## ステップ（api）
 
-// TODO: ここから作成
+### 1. @nestjs/config をNestjsプロジェクトに追加
 
-___
-___
-___
-___
-___
-___
-
-
-## 1. パッケージ生成
+パッケージをインストール
 
 ```bash
-npm init -y -w packages/shared/env-handler
+npm -w apps/api install @nestjs/config
 ```
 
-## 2. package.json を修正
+### 2. api に、config モジュール等を追加
 
-- name を変更
-- main と types を修正
-- typescript-config 参照を追加
-- private: true を追加
-
-`packages/shared/env-handler/package.json`
-
-```json
-  "name": "@repo/shared-env-handler",
-  ...,
-  "main:": "./src/index.ts",
-  "types": "./src/index.ts",
-  ...,
-  "devDependencies": {
-    "@repo/typescript-config": "*"
-  },
-  ...,
-  "private":"true",
+```bash
+cd apps/api
+npx nest g module app-config
+npx nest g service app-config
 ```
 
-## 3. tsconfig.json を作成
+`apps/api/src/app-config/app-config.module.ts`  
 
-`packages/shared/env-handler/tsconfig.json`
+```ts
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { AppConfigService } from './app-config.service';
 
-```json
-{
-  "extends": "@repo/typescript-config/base.json",
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: ['.env.local'],
+      isGlobal: true,
+    }),
+  ],
+  providers: [AppConfigService],
+  exports: [AppConfigService],
+})
+export class AppConfigModule {}
+```
+
+`apps/api/src/app-config/app-config.service.ts`
+
+```ts
+import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+
+@Injectable()
+export class AppConfigService {
+  constructor(private configService: ConfigService) {}
+
+  isProduction(): boolean {
+    return this.configService.get('NODE_ENV') === 'production';
+  }
+
+  get service() {
+    return this.configService;
+  }
+
+  get nodeEnv(): string {
+    return this.configService.get('NODE_ENV');
+  }
+
+  get databaseUrl(): string {
+    return this.configService.get('DATABASE_URL');
+  }
 }
 ```
 
-### 4. env.ts を作成
-
- `libs/shared/config/src/lib/env.ts`
-
-e.g. 
-```ts
-import * as dotenv from 'dotenv';
-
-dotenv.config({ path: '.env.local' });
-
-export const webEnv = {
-  NEXT_PUBLIC_API_ENDPOINT: process.env['NEXT_PUBLIC_API_ENDPOINT'] as string | undefined,
-  NEXT_PUBLIC_API_GQL_URL: process.env['NEXT_PUBLIC_API_GQL_URL'] as string | undefined
-};
-
-export const apiEnv = {
-  API_PORT: Number(process.env['API_PORT']) as number | undefined,
-  PRODUCTION_ORIGIN: process.env['PRODUCTION_ORIGIN'] as string | undefined,
-  DATABASE_URL: process.env['DATABASE_URL'] as string | undefined
-};
-```
-
- > .env に値が追加される度に更新していく。
-
-### 5. index.ts を作成
-
-`packages/shared/env-handler/src/index.ts`
-
-```ts
-export { apiEnv, webEnv } from './lib/env';
-```
+> .env に値が追加される度に更新していく。

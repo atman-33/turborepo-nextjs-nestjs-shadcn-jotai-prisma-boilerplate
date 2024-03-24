@@ -6,6 +6,7 @@ import { join } from 'path';
 import { DummiesModule } from './api/dummies/dummies.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AppConfigModule } from './app-config/app-config.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AppService } from './app.service';
     }),
     // ---- GraphQL ---- //
     DummiesModule,
+    AppConfigModule,
   ],
   controllers: [AppController],
   providers: [AppService],
