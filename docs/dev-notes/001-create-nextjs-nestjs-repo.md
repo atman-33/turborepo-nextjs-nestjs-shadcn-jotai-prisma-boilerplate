@@ -161,8 +161,8 @@ $ npm run start
 自動生成される`api/.git`は削除しておく。
 
 ```bash
-# currently under <Project name>/apps directory
-cd api
+# currently under root directory
+cd apps/api
 rm -rf .git
 ```
 
@@ -178,7 +178,7 @@ rm -rf .git
   }
 ```
 
-### 5. tsconfig.json に、エイリアスパスを追加
+### 4. tsconfig.json に、エイリアスパスを追加
 
 `apps/web/tsconfig.json`
 
@@ -189,7 +189,7 @@ rm -rf .git
     ...,
     "paths": {
       "@/*": [
-        "./*"
+        "./src/*"
       ]
     }
   },
