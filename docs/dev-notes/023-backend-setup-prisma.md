@@ -132,7 +132,26 @@ export { PrismaModule } from './lib/prisma.module';
 export { PrismaService } from './lib/prisma.service';
 ```
 
-### 8. ルートディレクトリの package.json を変更
+### 8. api（NestJS）に、data-access-dbを追加
+
+- node_modules に、`data-access-db`を追加
+  
+```bash
+# ルートディレクトリで実行
+npm i
+```
+
+- package.json に`data-access-db`を追加
+
+`apps/api/package.json`
+
+```json
+  "dependencies": {
+    "@repo/data-access-db": "*",
+    ...
+```
+
+### 9. ルートディレクトリの package.json を変更
 
 `/package.json`
 
@@ -159,7 +178,7 @@ export { PrismaService } from './lib/prisma.service';
   },
 ```
 
-### 9. ルートディレクトリの turbo.json を変更
+### 10. ルートディレクトリの turbo.json を変更
 
 - pipeline に下記を追加
 
@@ -177,7 +196,7 @@ export { PrismaService } from './lib/prisma.service';
     }
 ```
 
-### 10. prisma マイグレーション
+### 11. prisma マイグレーション
 
 マイグレーション実行で、DBテーブルを生成する。
 
@@ -189,7 +208,7 @@ npm run db:migrate:dev
 
 > もしデータをリセットする場合、先にマイグレーションフォルダを削除してから、マイグレーションコマンドを実行すること。
 
-### 11. prisma generate
+### 12. prisma generate
 
 `prisma generate` コマンド実行で、スキーマに定義したモデルのTypeファイル等を生成する。
 
