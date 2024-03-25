@@ -3,7 +3,7 @@ import path from 'path';
 import { Model, parsePrismaSchema } from './lib/parse-prisma-schema';
 
 // ---- Constants ---- //
-const FOLDER_PATH = 'packages/api/data-access-db/src/lib';
+const FOLDER_PATH = 'packages/data-access-db/src/lib';
 const FILE_NAME = 'schema.prisma';
 // ------------------- //
 
