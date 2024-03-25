@@ -61,17 +61,20 @@ npx nest g module app-config
 npx nest g service app-config
 ```
 
+> app-config.service.spec.ts は削除してよい。
+
 `apps/api/src/app-config/app-config.module.ts`  
 
 ```ts
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { join } from 'path';
 import { AppConfigService } from './app-config.service';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env.local'],
+      envFilePath: join(process.cwd(), '..', '..', '.env.local'),
       isGlobal: true,
     }),
   ],
@@ -91,20 +94,16 @@ import { ConfigService } from '@nestjs/config';
 export class AppConfigService {
   constructor(private configService: ConfigService) {}
 
-  isProduction(): boolean {
-    return this.configService.get('NODE_ENV') === 'production';
-  }
-
-  get service() {
-    return this.configService;
-  }
-
-  get nodeEnv(): string {
-    return this.configService.get('NODE_ENV');
-  }
-
   get databaseUrl(): string {
     return this.configService.get('DATABASE_URL');
+  }
+
+  get apiPort(): number {
+    return this.configService.get('API_PORT');
+  }
+
+  get productionOrigin(): string {
+    return this.configService.get('PRODUCTION_ORIGIN');
   }
 }
 ```

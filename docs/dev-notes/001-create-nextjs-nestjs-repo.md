@@ -173,7 +173,7 @@ rm -rf .git
 ```json
   "scripts": {
     ...,
-    "dev": "nest start",
+    "dev": "nest start --watch",
     ...,
   }
 ```
