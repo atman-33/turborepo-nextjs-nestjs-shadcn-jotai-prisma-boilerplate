@@ -1,4 +1,4 @@
-import { PrismaModule } from '@repo/api-data-access-db';
+import { PrismaModule } from '@repo/data-access-db';
 import { Module } from '@nestjs/common';
 import { __model_plural__Resolver } from './__model_plural_kebab__.resolver';
 import { __model_plural__Service } from './__model_plural_kebab__.service';

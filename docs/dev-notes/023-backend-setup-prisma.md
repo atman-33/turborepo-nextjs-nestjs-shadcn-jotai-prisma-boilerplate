@@ -9,27 +9,37 @@
 ### 1. data-access-db パッケージを追加
 
 ```bash
-npm init -y -w packages/api/data-access-db
-npm -w packages/api/data-access-db install @prisma/client @nestjs/graphql graphql-type-json @nestjs/common
-npm -w packages/api/data-access-db install -D typescript prisma env-cmd prisma-nestjs-graphql 
+npm init -y -w packages/data-access-db
+npm -w packages/data-access-db install @prisma/client @nestjs/graphql graphql-type-json @nestjs/common
+npm -w packages/data-access-db install -D typescript prisma env-cmd prisma-nestjs-graphql 
 echo "public-hoist-pattern[]=*prisma*" >> .npmrc
 ```
 
 ### 2. package.json を変更
 
-`packages/api/data-access-db/package.json`
+`packages/data-access-db/package.json`
 
 - name を変更
 
 ```json
-  "name": "@repo/api-data-access-db",
+  "name": "@repo/data-access-db",
 ```
 
-- main と types を修正
+- exports と types を修正
 
 ```json
-  "main:": "./src/index.ts",
-  "types": "./src/index.ts",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "types": "./dist/index.d.ts",
+```
+
+- scripts に build を追加
+
+```json
+  "scripts": {
+    "build": "tsc --build --force tsconfig.json"
+  },
 ```
 
 - devDependencies を追加
@@ -44,13 +54,14 @@ echo "public-hoist-pattern[]=*prisma*" >> .npmrc
 
 ### 3. tsconfig.json を作成
 
-`packages/api/data-access-db/tsconfig.json`
+`packages/data-access-db/tsconfig.json`
 
 ```json
 {
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "outDir": "./dist",
   }
 }
 ```
@@ -67,7 +78,7 @@ DATABASE_URL="mongodb://monty:pass@localhost:27017/mongo_dev?authSource=admin&di
 
 ### 5. schema.prisma を作成
 
- `libs/api/prisma/data-access-db/src/lib/schema.prisma`
+ `packages/data-access-db/src/lib/schema.prisma`
 
 ```prisma
 generator client {
@@ -106,14 +117,14 @@ generator nestgraphql {
 
 ### 6. prisma サービスとモジュールファイル作成
 
-- `packages/api/data-access-db/src/lib/prisma.service.ts`
-- `packages/api/data-access-db/src/lib/prisma.module.ts`
+- `packages/data-access-db/src/lib/prisma.service.ts`
+- `packages/data-access-db/src/lib/prisma.module.ts`
 
 > コードは、ファイルの中身を参照のこと。
 
 ### 7. index.ts を作成
 
-`packages/api/data-access-db/src/index.ts`
+`packages/data-access-db/src/index.ts`
 
 ```ts
 export * from './lib/@generated';
@@ -131,7 +142,7 @@ export { PrismaService } from './lib/prisma.service';
   ...
   },
   "prisma": {
-    "schema": "packages/api/data-access-db/src/lib/schema.prisma"
+    "schema": "packages/data-access-db/src/lib/schema.prisma"
   }
 }
 ```
@@ -184,15 +195,6 @@ npm run db:migrate:dev
 
 ```bash
 npm run db:generate
-```
-
-### 12. api で data-access-db を利用するための参照を追加
-
-`apps/api/package.json`
-
-```json
-  "dependencies": {
-    "@repo/api-data-access-db": "*",
 ```
 
 ## その他

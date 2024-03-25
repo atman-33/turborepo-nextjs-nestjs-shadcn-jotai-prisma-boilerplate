@@ -1,1 +1,1 @@
-export { Dummy } from '@repo/api-data-access-db';
+export { Dummy } from '@repo/data-access-db';

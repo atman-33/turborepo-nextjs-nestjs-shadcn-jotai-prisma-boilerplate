@@ -1,4 +1,4 @@
-import { PrismaService } from '@repo/api-data-access-db';
+import { PrismaService } from '@repo/data-access-db';
 import { Injectable } from '@nestjs/common';
 import { Get__model__Args } from './dto/args/get-__model_kebab__-args.dto';
 import { Create__model__Input } from './dto/input/create-__model_kebab__-input.dto';

@@ -1,1 +1,1 @@
-export { CreateOneDummyArgs as CreateDummyInput } from '@repo/api-data-access-db';
+export { CreateOneDummyArgs as CreateDummyInput } from '@repo/data-access-db';

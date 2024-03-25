@@ -1,1 +1,1 @@
-export { DeleteOneDummyArgs as DeleteDummyInput } from '@repo/api-data-access-db';
+export { DeleteOneDummyArgs as DeleteDummyInput } from '@repo/data-access-db';

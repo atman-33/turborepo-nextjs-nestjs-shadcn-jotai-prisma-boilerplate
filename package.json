@@ -34,6 +34,6 @@
     "packages/*"
   ],
   "prisma": {
-    "schema": "packages/api/data-access-db/src/lib/schema.prisma"
+    "schema": "packages/data-access-db/src/lib/schema.prisma"
   }
 }

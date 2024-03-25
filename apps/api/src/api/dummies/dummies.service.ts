@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from '@repo/api-data-access-db';
+import { PrismaService } from '@repo/data-access-db';
 import { DeleteDummyInput } from './dto//input/delete-dummy-input.dto';
 import { GetDummyArgs } from './dto/args/get-dummy-args.dto';
 import { CreateDummyInput } from './dto/input/create-dummy-input.dto';

@@ -6,7 +6,7 @@
 
 Dummy モデルを追加
 
-`packages/api/data-access-db/src/lib/schema.prisma`
+`packages/data-access-db/src/lib/schema.prisma`
 
 e.g. mongo db 向け
 
@@ -38,23 +38,12 @@ nest g resource api/dummies --no-spec
 - entities フォルダを削除して、models フォルダを代わりに作成
 - `dummies.graphql` を削除
 
-### 3. api プロジェクトに、data-access-db パッケージを追加
-
-`apps/api/package.json`
-
-```json
-  "dependencies": {
-    "@repo/api-data-access-db": "*",
-```
-
-> 追加されていない場合は追加しておく必要あり
-
-### 4. dummies.module.ts を修正
+### 3. dummies.module.ts を修正
 
 - PrismaModule を追加
 
 ```ts
-import { PrismaModule } from '@repo/api-data-access-db';
+import { PrismaModule } from '@repo/data-access-db';
 
 @Module({
   providers: [DummiesResolver, DummiesService],
@@ -63,7 +52,11 @@ import { PrismaModule } from '@repo/api-data-access-db';
 export class DummiesModule {}
 ```
 
-### 5. 他の各種ファイルを修正
+> PrismaModuleの`@repo/data-access-db`で参照エラーを発生する時は、
+> node_modulesに`@repo/data-access-db`が生成されていない。
+> その場合は、ルートディレクトリで`npm i`を実行し、node_modulesを更新すること。
+
+### 4. 他の各種ファイルを修正
 
 修正ファイルは下記。詳細はファイルを参照のこと。
 
@@ -77,7 +70,7 @@ export class DummiesModule {}
 
 > `service`ファイルで利用している`prisma`では、別テーブルとリレーションを利用してデータ操作する場合、`include`を利用することに注意
 
-### 6. AppModule に DummiesModule を追加
+### 5. AppModule に DummiesModule を追加
 
 `apps/api/src/app/app.module.ts`
 

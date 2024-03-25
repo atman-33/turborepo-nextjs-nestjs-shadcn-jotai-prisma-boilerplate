@@ -1,1 +1,1 @@
-export { __model__ } from '@repo/api-data-access-db';
+export { __model__ } from '@repo/data-access-db';

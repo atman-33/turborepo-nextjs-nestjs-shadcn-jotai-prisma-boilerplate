@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { DummiesModule } from './api/dummies/dummies.module';
 import { AppConfigModule } from './app-config/app-config.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -20,6 +21,7 @@ import { AppService } from './app.service';
       exclude: ['/api/*', '/api/graphql'],
     }),
     // ---- GraphQL ---- //
+    DummiesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

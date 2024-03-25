@@ -1,1 +1,1 @@
-export { FindUniqueDummyArgs as GetDummyArgs } from '@repo/api-data-access-db';
+export { FindUniqueDummyArgs as GetDummyArgs } from '@repo/data-access-db';

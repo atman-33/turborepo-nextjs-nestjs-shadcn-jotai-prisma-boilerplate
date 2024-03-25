@@ -1,1 +1,1 @@
-export { UpdateOneDummyArgs as UpdateDummyInput } from '@repo/api-data-access-db';
+export { UpdateOneDummyArgs as UpdateDummyInput } from '@repo/data-access-db';
