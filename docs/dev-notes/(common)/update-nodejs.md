@@ -2,23 +2,23 @@
 
 ## 参考URL
 
-<https://qiita.com/cointoss1973/items/c000c4f84ae4b0c166b5>
+[UbuntuへのNode.jsのインストール](https://zenn.dev/toyonobu/articles/20230121-node-install-for-ubuntu)
 
 ## ステップ
 
-## 1. nコマンド導入
+## 1. アップデート & 旧バージョン削除
 
 ```bash
+sudo apt update
 sudo apt install nodejs npm
-sudo npm install n -g
-```
-
-## 2. 推奨版(lts) のインストール
-```bash
-sudo n lts
-```
-
-## 3. 古い nodejs npm の削除
-```bash
+sudo npm -g install n
+sudo n stable
 sudo apt purge nodejs npm
+sudo apt autoremove
+```
+
+## 2. ver. 確認
+```bash
+node --version
+npm --version
 ```

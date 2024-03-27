@@ -1,15 +1,18 @@
-import { add } from '@repo/math-helpers';
+import { Link } from '@/components/elements/Link';
 import { Button } from '@repo/ui';
 
 const Page = () => {
   return (
-    <>
-      <h1 className="text-xl">Web</h1>
-      <p>1 + 2 = {add(1, 2)}</p>
+    <div className="flex flex-col items-center space-y-8 m-8">
+      <h1 className="text-4xl font-bold text-center">
+        Nx Nextjs x Nestjs Tailwindcss Shadcn-ui Prisma Boilerplate
+      </h1>
 
-      <Button variant={'default'}>ボタン</Button>
-    </>
+      <Link href="/debug">
+        <Button variant="default">Debug Room</Button>
+      </Link>
+    </div>
   );
-}
+};
 
-export default Page
+export default Page;
