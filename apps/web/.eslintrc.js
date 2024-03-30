@@ -8,6 +8,12 @@ module.exports = {
   },
   overrides: [
     {
+      files: [
+        "*.ts",
+        "*.tsx",
+        "*.js",
+        "*.jsx"
+      ],
       rules: {
         'no-restricted-imports': [
           'error',
