@@ -1,13 +1,11 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-
-import { AppModule } from './app.module';
-
 import * as cookieParser from 'cookie-parser';
-import { AppConfigService } from './app-config/app-config.service';
+import { AppModule } from './app.module';
+import { apiEnv } from './config';
 
 async function bootstrap() {
-  console.log(`Current Directory: ${process.cwd()}`);
+  console.log(`api process.cwd: ${process.cwd()}`);
 
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
@@ -16,12 +14,10 @@ async function bootstrap() {
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe());
 
-  const appConfigService = app.get(AppConfigService);
-
-  const port = appConfigService.apiPort || 3000;
+  const port = apiEnv.API_PORT || 3000;
   app.enableCors({
     origin: [
-      appConfigService.productionOrigin || 'http://localhost:4200',
+      apiEnv.WEB_ORIGIN || 'http://localhost:4200',
       `http://localhost:${port}`,
     ],
     credentials: true,

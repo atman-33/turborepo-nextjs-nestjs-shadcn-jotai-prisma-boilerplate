@@ -25,7 +25,7 @@ echo "public-hoist-pattern[]=*prisma*" >> .npmrc
   "name": "@repo/data-access-db",
 ```
 
-- exports と types を修正
+- main を削除して、exports と types を修正
 
 ```json
   "exports": {

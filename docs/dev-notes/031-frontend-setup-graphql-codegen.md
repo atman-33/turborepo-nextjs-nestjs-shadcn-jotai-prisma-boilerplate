@@ -24,12 +24,31 @@ npm init -y -w packages/data-access-graphql
   "name": "@repo/data-access-graphql",
 ```
 
-- eslint, typeconfig の依存関係を追加
+- main を削除して、exports と types を修正
 
 ```json
-  "dependencies": {
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "types": "./dist/index.d.ts",
+```
+
+- scripts に build を追加
+
+```json
+  "scripts": {
+    "build": "tsc --build --force tsconfig.json"
+  },
+```
+
+- devDependencies を追加
+
+```json
+  "devDependencies": {
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
+    ...
+  }
 ```
 
 ### 2. tsconfig を追加
@@ -48,8 +67,6 @@ npm init -y -w packages/data-access-graphql
 ```
 
 ### 3. パッケージをインストール
-
-デフォルトで必要  
 
 ```bash
 npm -w packages/data-access-graphql i -D typescript ts-node 
@@ -183,11 +200,11 @@ export * from './lib/types';
 import { webEnv } from '@/config';
 import { getGraphqlClient } from '@repo/data-access-graphql';
 
-if (!webEnv.api.gqlUrl) {
+if (!webEnv.NEXT_PUBLIC_API_GQL_URL) {
   throw new Error('env: NEXT_PUBLIC_API_GQL_URL is not defined');
 }
 
-export const gql: ReturnType<typeof getGraphqlClient> = getGraphqlClient(webEnv.api.gqlUrl);
+export const gql: ReturnType<typeof getGraphqlClient> = getGraphqlClient(webEnv.NEXT_PUBLIC_API_GQL_URL);
 ```
 
 ## 利用例

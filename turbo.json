@@ -1,7 +1,10 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "globalDependencies": ["**/.env.*local"],
-  "globalEnv": ["NEXT_PUBLIC_API_ENDPOINT","NEXT_PUBLIC_GQL_URL"],
+  "globalEnv": [
+    "NEXT_PUBLIC_API_ENDPOINT",
+    "NEXT_PUBLIC_API_GQL_URL"
+  ],
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],

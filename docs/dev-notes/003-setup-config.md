@@ -1,111 +1,43 @@
 # web, api それぞれで env を扱えるように設定
 
-## ステップ（web）
+## ステップ: evn 値取得用のパッケージを準備
 
-### 1. ルートディレクトリに .env.local を作成
+### 1. biildとdevコマンドに .env.local 読み込みを追加
 
-`.env.local`
+`package.json`
 
-```env
-# ---- web ---- #
-# Backend URL
-NEXT_PUBLIC_API_ENDPOINT=http://localhost:3333/api
-
-# GraphQL URL
-NEXT_PUBLIC_API_GQL_URL=http://localhost:3333/api/graphql
+```bash
+  "scripts": {
+    "build": "npx env-cmd -f .env.local turbo build",
+    "build:packages": "npx env-cmd -f .env.local turbo build --filter='./packages/*'",
+    "----START----": "-------------------------",
+    ...,
+    "dev": "turbo build & npx env-cmd -f .env.local turbo dev",
+    "dev:web": "npx env-cmd -f .env.local turbo dev --filter=web",
+    "dev:api": "npm run build:packages & npx env-cmd -f .env.local turbo dev --filter=api",
 ```
 
-> .env.local は、開示したくない情報が含まれる可能性があるため、.gitignore に指定してpushできないようにしておく。
-> .env.local に記載した内容を忘れないようにするため、.env.example を作成し、ダミーの値や使い方を記載しておく。
-
-### 2. turbo.json に利用する env を記載
-
-`turbo.json`
-
-```json
-  "globalEnv": ["NEXT_PUBLIC_API_ENDPOINT","NEXT_PUBLIC_GQL_URL"],
-```
-
-> 追加がある場合は、都度追記していく。
-
-### 3. web で env を利用する config を作成
+### 2. web に、env 読み込みを追加
 
 `apps/web/src/config/index.ts`
 
 ```ts
 export const webEnv = {
-  api: {
-    endpoint: process.env.NEXT_PUBLIC_API_ENDPOINT as string,
-    gqlUrl: process.env.NEXT_PUBLIC_GQL_URL as string,
-  },
+  NEXT_PUBLIC_API_ENDPOINT: process.env['NEXT_PUBLIC_API_ENDPOINT'] as string,
+  NEXT_PUBLIC_API_GQL_URL: process.env['NEXT_PUBLIC_API_GQL_URL'] as string
 };
 ```
 
-___
+> 取り扱うenvの値が増えた際は、都度追加していく。
 
-## ステップ（api）
+### 3. api に、env 読み込みを追加
 
-### 1. @nestjs/config をNestjsプロジェクトに追加
-
-パッケージをインストール
-
-```bash
-npm -w apps/api install @nestjs/config
-```
-
-### 2. api に、config モジュール等を追加
-
-```bash
-cd apps/api
-npx nest g module app-config
-npx nest g service app-config
-```
-
-> app-config.service.spec.ts は削除してよい。
-
-`apps/api/src/app-config/app-config.module.ts`  
+`apps/api/src/config/index.ts`
 
 ```ts
-import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
-import { join } from 'path';
-import { AppConfigService } from './app-config.service';
-
-@Module({
-  imports: [
-    ConfigModule.forRoot({
-      envFilePath: join(process.cwd(), '..', '..', '.env.local'),
-      isGlobal: true,
-    }),
-  ],
-  providers: [AppConfigService],
-  exports: [AppConfigService],
-})
-export class AppConfigModule {}
+export const apiEnv = {
+  API_PORT: Number(process.env['API_PORT']) as number,
+  WEB_ORIGIN: process.env['WEB_ORIGIN'] as string,
+  DATABASE_URL: process.env['DATABASE_URL'] as string,
+};
 ```
-
-`apps/api/src/app-config/app-config.service.ts`
-
-```ts
-import { Injectable } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-
-@Injectable()
-export class AppConfigService {
-  constructor(private configService: ConfigService) {}
-
-  get databaseUrl(): string {
-    return this.configService.get('DATABASE_URL');
-  }
-
-  get apiPort(): number {
-    return this.configService.get('API_PORT');
-  }
-
-  get productionOrigin(): string {
-    return this.configService.get('PRODUCTION_ORIGIN');
-  }
-}
-```
-
-> .env に値が追加される度に更新していく。

@@ -57,14 +57,12 @@ npm -w apps/api install -D @types/cookie-parser
 ```ts
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-
-import { AppModule } from './app.module';
-
 import * as cookieParser from 'cookie-parser';
-import { AppConfigService } from './app-config/app-config.service';
+import { AppModule } from './app.module';
+import { apiEnv } from './config';
 
 async function bootstrap() {
-  console.log(`Current Directory: ${process.cwd()}`);
+  console.log(`api process.cwd: ${process.cwd()}`);
 
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
@@ -73,12 +71,10 @@ async function bootstrap() {
   app.use(cookieParser());
   app.useGlobalPipes(new ValidationPipe());
 
-  const appConfigService = app.get(AppConfigService);
-
-  const port = appConfigService.apiPort || 3000;
+  const port = apiEnv.API_PORT || 3000;
   app.enableCors({
     origin: [
-      appConfigService.productionOrigin || 'http://localhost:4200',
+      apiEnv.WEB_ORIGIN || 'http://localhost:4200',
       `http://localhost:${port}`,
     ],
     credentials: true,
@@ -93,6 +89,8 @@ async function bootstrap() {
 bootstrap();
 ```
 
+> 予め、 env の API_PORT, WEB_ORIGIN を設定しておく。
+
 ### 3. app.module.ts を修正
 
 `apps/api/src/app.module.ts`
@@ -103,13 +101,11 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { AppConfigModule } from './app-config/app-config.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 @Module({
   imports: [
-    AppConfigModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       path: '/api/graphql',
