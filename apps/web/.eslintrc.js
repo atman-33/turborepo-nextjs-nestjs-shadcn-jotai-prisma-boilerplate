@@ -6,4 +6,16 @@ module.exports = {
   parserOptions: {
     project: true,
   },
+  overrides: [
+    {
+      rules: {
+        'no-restricted-imports': [
+          'error',
+          {
+            patterns: ['@/features/*/*'],
+          },
+        ],
+      }
+    }
+  ]
 };
