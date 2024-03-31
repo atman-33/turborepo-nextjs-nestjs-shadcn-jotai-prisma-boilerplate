@@ -11,7 +11,7 @@ export const dummyAtomFamily = atomFamily(
 
 export const dummyIdsAtom = atom<string[]>([]);
 
-const dummiesAtom = atom<PartialDummy[]>((get) => {
+export const dummiesAtom = atom<PartialDummy[]>((get) => {
   const ids = get(dummyIdsAtom);
   return ids.map((id) =>
     get(

@@ -60,14 +60,14 @@ const UpdateDummyForm = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(updateDummy)}>
           <FormLabel className="text-base font-bold underline">データ更新</FormLabel>
-          <div className="ml-4 flex-col flex space-y-2 items-start">
+          <div className="ml-4 flex space-x-2 items-start">
             <FormField
               control={form.control}
               name="id"
               render={({ field }) => (
                 <FormItem className="flex space-x-2 items-baseline">
                   <FormLabel className="w-[50px]">ID</FormLabel>
-                  <FormControl className="w-[210px]">
+                  <FormControl className="w-[150px]">
                     <Input placeholder="ID" {...field} />
                   </FormControl>
                   <FormMessage />
@@ -80,7 +80,7 @@ const UpdateDummyForm = () => {
               render={({ field }) => (
                 <FormItem className="flex space-x-2 items-baseline">
                   <FormLabel className="w-[50px]">TEXT</FormLabel>
-                  <FormControl className="w-[210px]">
+                  <FormControl className="w-[150px]">
                     <Input placeholder="TEXT" {...field} />
                   </FormControl>
                   <FormMessage />
@@ -93,7 +93,7 @@ const UpdateDummyForm = () => {
               render={({ field }) => (
                 <FormItem className="flex space-x-2 items-baseline">
                   <FormLabel className="w-[50px]">INT</FormLabel>
-                  <FormControl className="w-[210px]">
+                  <FormControl className="w-[150px]">
                     <Input
                       placeholder="write something..."
                       {...field}

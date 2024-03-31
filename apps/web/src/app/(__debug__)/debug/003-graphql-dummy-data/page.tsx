@@ -25,9 +25,16 @@ const Page = () => {
   };
 
   return (
-    <div className="flex space-x-12 items-start">
+    <div className="flex flex-col space-y-4 items-start">
+      <div className="flex flex-col space-y-4 items-start">
+        <CreateDummyForm />
+        <hr className="w-full" />
+        <UpdateDummyForm />
+        <hr className="w-full" />
+        <DeleteDummyForm />
+      </div>
       <div className="border-r-2 pr-4">
-        <Button variant={'secondary'} onClick={handleReloadButtonClick}>
+        <Button variant={'default'} onClick={handleReloadButtonClick}>
           リロード
         </Button>
         <Table className="w-[500px]">
@@ -55,13 +62,6 @@ const Page = () => {
             </TableRow>
           </TableFooter>
         </Table>
-      </div>
-      <div className="flex flex-col space-y-4 items-start">
-        <CreateDummyForm />
-        <hr className="w-full" />
-        <UpdateDummyForm />
-        <hr className="w-full" />
-        <DeleteDummyForm />
       </div>
     </div>
   );

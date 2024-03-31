@@ -42,7 +42,7 @@ const DeleteDummyForm = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(deleteDummy)}>
           <FormLabel className="text-base font-bold underline">データ削除</FormLabel>
-          <div className="ml-4 flex-col flex space-y-2 items-start">
+          <div className="ml-4 flex space-x-2 items-start">
             <FormField
               control={form.control}
               name="id"

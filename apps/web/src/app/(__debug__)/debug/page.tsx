@@ -1,6 +1,10 @@
 import { Link } from '@/components/elements/Link';
 
-const debugPages = ['/debug/001-shadcn-button', '/debug/002-graphql'];
+const debugPages = [
+  '/debug/001-shadcn-button',
+  '/debug/002-graphql',
+  '/debug/003-graphql-dummy-data',
+];
 
 const Page = () => {
   return (

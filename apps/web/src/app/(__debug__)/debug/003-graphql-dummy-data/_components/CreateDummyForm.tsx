@@ -49,7 +49,7 @@ const CreateDummyForm = () => {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(createDummy)}>
           <FormLabel className="text-base font-bold underline">データ追加</FormLabel>
-          <div className="ml-4 flex-col flex space-y-2 items-start">
+          <div className="ml-4 flex space-x-2 items-start">
             <FormField
               control={form.control}
               name="text"
