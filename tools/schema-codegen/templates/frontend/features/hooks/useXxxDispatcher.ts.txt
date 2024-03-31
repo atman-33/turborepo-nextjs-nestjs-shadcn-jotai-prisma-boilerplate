@@ -1,0 +1,73 @@
+import { gql } from '@/lib/graphql-client';
+import {
+  __model__CreateInput,
+  __model__UpdateInput,
+  __model__WhereUniqueInput,
+} from '@repo/data-access-graphql';
+import { useAtomCallback } from 'jotai/utils';
+import { useCallback } from 'react';
+import { __model_camel__AtomFamily, __model_camel__IdsAtom } from '../stores/__model_kebab__-atom';
+
+const use__model__Dispatcher = () => {
+  const load__model_plural__ = useAtomCallback(
+    useCallback(async (get, set) => {
+      const res = await gql.get__model_plural__();
+      res.__model_plural_camel__?.map((d) => set(__model_camel__AtomFamily({ id: d.id }), d));
+      set(
+        __model_camel__IdsAtom,
+        res.__model_plural_camel__?.map((d) => d.id),
+      );
+
+      return res.__model_plural_camel__;
+    }, []),
+  );
+
+  const create__model__ = useAtomCallback(
+    useCallback(async (get, set, { data }: { data: __model__CreateInput }) => {
+      const res = await gql.create__model__({ data });
+      __model_camel__AtomFamily(res.create__model__);
+
+      if (!get(__model_camel__IdsAtom).includes(res.create__model__.id)) {
+        set(__model_camel__IdsAtom, [...get(__model_camel__IdsAtom), res.create__model__.id]);
+      }
+      return res.create__model__;
+    }, []),
+  );
+
+  const update__model__ = useAtomCallback(
+    useCallback(
+      async (
+        get,
+        set,
+        { data, where }: { data: __model__UpdateInput; where: __model__WhereUniqueInput },
+      ) => {
+        const res = await gql.update__model__({ where: where, data: data });
+        set(__model_camel__AtomFamily({ id: res.update__model__.id }), res.update__model__);
+        return res.update__model__;
+      },
+      [],
+    ),
+  );
+
+  const delete__model__ = useAtomCallback(
+    useCallback(async (get, set, { where }: { where: __model__WhereUniqueInput }) => {
+      const res = await gql.delete__model__({ where: where });
+      __model_camel__AtomFamily.remove(res.delete__model__);
+      const ids = get(__model_camel__IdsAtom);
+      set(
+        __model_camel__IdsAtom,
+        ids.filter((id) => id !== res.delete__model__.id),
+      );
+      return res.delete__model__.id;
+    }, []),
+  );
+
+  return {
+    load__model_plural__,
+    create__model__,
+    update__model__,
+    delete__model__,
+  };
+};
+
+export { use__model__Dispatcher };

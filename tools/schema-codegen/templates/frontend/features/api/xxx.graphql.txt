@@ -1,0 +1,23 @@
+query get__model_plural__ {
+  __model_plural_kebab__ {
+    __columns__
+  }
+}
+
+mutation create__model__($data: __model__CreateInput!) {
+  create__model__(data: $data) {
+    __columns__
+  }
+}
+
+mutation update__model__($data: __model__UpdateInput!, $where: __model__WhereUniqueInput!) {
+  update__model__(data: $data, where: $where) {
+    __columns__
+  }
+}
+
+mutation delete__model__($where: __model__WhereUniqueInput!) {
+  delete__model__(where: $where) {
+    id
+  }
+}

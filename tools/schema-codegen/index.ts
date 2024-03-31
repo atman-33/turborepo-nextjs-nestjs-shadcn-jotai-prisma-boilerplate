@@ -28,6 +28,10 @@ const replaceFile = (fileContent: string, model: Model) => {
   fileContent = fileContent.replace(/__model_plural_camel__/g, model.pluralCamel);
   fileContent = fileContent.replace(/__model_kebab__/g, model.kebab);
   fileContent = fileContent.replace(/__model_camel__/g, model.camel);
+  fileContent = fileContent.replace(
+    /__columns__/g,
+    model.columns.map((column) => column.name).join('\n'),
+  );
   return fileContent;
 };
 
@@ -43,37 +47,49 @@ const models = parsePrismaSchema(schemaContent);
 models.forEach((model) => {
   const sources = [
     {
-      template: 'templates/dto/get-xxx-args.dto.txt',
-      output: `@generated/${model.kebab}/dto/args/get-${model.kebab}-args.dto.ts`
+      template: 'templates/backend/api/dto/get-xxx-args.dto.ts.txt',
+      output: `@generated/${model.kebab}/backend/api/dto/args/get-${model.kebab}-args.dto.ts`,
     },
     {
-      template: 'templates/dto/create-xxx-input.dto.txt',
-      output: `@generated/${model.kebab}/dto/input/create-${model.kebab}-input.dto.ts`
+      template: 'templates/backend/api/dto/create-xxx-input.dto.ts.txt',
+      output: `@generated/${model.kebab}/backend/api/dto/input/create-${model.kebab}-input.dto.ts`,
     },
     {
-      template: 'templates/dto/update-xxx-input.dto.txt',
-      output: `@generated/${model.kebab}/dto/input/update-${model.kebab}-input.dto.ts`
+      template: 'templates/backend/api/dto/update-xxx-input.dto.ts.txt',
+      output: `@generated/${model.kebab}/backend/api/dto/input/update-${model.kebab}-input.dto.ts`,
     },
     {
-      template: 'templates/dto/delete-xxx-input.dto.txt',
-      output: `@generated/${model.kebab}/dto/input/delete-${model.kebab}-input.dto.ts`
+      template: 'templates/backend/api/dto/delete-xxx-input.dto.ts.txt',
+      output: `@generated/${model.kebab}/backend/api/dto/input/delete-${model.kebab}-input.dto.ts`,
     },
     {
-      template: 'templates/models/xxx.model.txt',
-      output: `@generated/${model.kebab}/models/${model.kebab}.model.ts`
+      template: 'templates/backend/api/models/xxx.model.ts.txt',
+      output: `@generated/${model.kebab}/backend/api/models/${model.kebab}.model.ts`,
     },
     {
-      template: 'templates/module/xxxs.module.txt',
-      output: `@generated/${model.kebab}/${model.pluralKebab}.module.ts`
+      template: 'templates/backend/api/module/xxxs.module.ts.txt',
+      output: `@generated/${model.kebab}/backend/api/${model.pluralKebab}.module.ts`,
     },
     {
-      template: 'templates/module/xxxs.resolver.txt',
-      output: `@generated/${model.kebab}/${model.pluralKebab}.resolver.ts`
+      template: 'templates/backend/api/module/xxxs.resolver.ts.txt',
+      output: `@generated/${model.kebab}/backend/api/${model.pluralKebab}.resolver.ts`,
     },
     {
-      template: 'templates/module/xxxs.service.txt',
-      output: `@generated/${model.kebab}/${model.pluralKebab}.service.ts`
-    }
+      template: 'templates/backend/api/module/xxxs.service.ts.txt',
+      output: `@generated/${model.kebab}/backend/api/${model.pluralKebab}.service.ts`,
+    },
+    {
+      template: 'templates/frontend/features/api/xxx.graphql.txt',
+      output: `@generated/${model.kebab}/frontend/features/api/${model.kebab}.graphql`,
+    },
+    {
+      template: 'templates/frontend/features/hooks/useXxxDispatcher.ts.txt',
+      output: `@generated/${model.kebab}/frontend/features/hooks/use${model.model}Dispatcher.ts`,
+    },
+    {
+      template: 'templates/frontend/features/stores/xxx-atom.ts.txt',
+      output: `@generated/${model.kebab}/frontend/features/stores/${model.kebab}-atom.ts`,
+    },
   ];
 
   sources.forEach((source) => {
@@ -84,4 +100,4 @@ models.forEach((model) => {
   });
 });
 
-console.log('Done!');
+console.log(`✅ File generated! => ${__dirname}/@generated`);
