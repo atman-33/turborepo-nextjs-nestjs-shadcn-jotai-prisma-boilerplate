@@ -1,0 +1,28 @@
+import { __model__ } from '@repo/data-access-graphql';
+import { atom, useAtomValue } from 'jotai';
+import { atomFamily } from 'jotai/utils';
+
+export type Partial__model__ = Partial<__model__>;
+
+export const __model_camel__AtomFamily = atomFamily(
+  (__model_camel__: Partial__model__) => atom(__model_camel__),
+  (a: Partial__model__, b: Partial__model__) => a.id === b.id,
+);
+
+export const __model_camel__IdsAtom = atom<string[]>([]);
+
+export const __model_plural_camel__Atom = atom<Partial__model__[]>((get) => {
+  const ids = get(__model_camel__IdsAtom);
+  return ids.map((id) =>
+    get(
+      __model_camel__AtomFamily({
+        id,
+      }),
+    ),
+  );
+});
+
+export const __model_camel__Selectors = {
+  useGet__model_plural__: () => useAtomValue(__model_plural_camel__Atom),
+  useGet__model__: (id: string) => useAtomValue(__model_camel__AtomFamily({ id })),
+};
