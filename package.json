@@ -1,5 +1,6 @@
 {
   "name": "turborepo-nextjs-nestjs-shadcn-prisma-boilerplate",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "build": "npx env-cmd -f .env.local turbo build",
