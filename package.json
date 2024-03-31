@@ -5,8 +5,8 @@
     "build": "npx env-cmd -f .env.local turbo build",
     "build:packages": "npx env-cmd -f .env.local turbo build --filter='./packages/*'",
     "----START----": "-------------------------",
-    "start:gql": "graphql-codegen --config tools/graphql-codegen/codegen.ts",
-    "dev": "turbo build & npx env-cmd -f .env.local turbo dev",
+    "start:gql": "graphql-codegen --config tools/graphql-codegen/codegen.ts && turbo build --filter='./packages/data-access-graphql'",
+    "dev": "npm run build:packages & npx env-cmd -f .env.local turbo dev",
     "dev:web": "npx env-cmd -f .env.local turbo dev --filter=web",
     "dev:api": "npm run build:packages & npx env-cmd -f .env.local turbo dev --filter=api",
     "lint": "turbo lint",
@@ -45,6 +45,7 @@
   },
   "dependencies": {
     "@graphql-codegen/cli": "^5.0.2",
-    "@graphql-codegen/client-preset": "^4.2.5"
+    "@graphql-codegen/client-preset": "^4.2.5",
+    "jotai": "^2.7.2"
   }
 }

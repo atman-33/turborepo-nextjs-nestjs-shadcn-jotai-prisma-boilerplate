@@ -132,7 +132,7 @@ query getDummies {
 "scripts": {
     ...,
     "----START----": "-------------------------",
-    "start:gql": "graphql-codegen --config tools/graphql-codegen/codegen.ts",
+    "start:gql": "graphql-codegen --config tools/graphql-codegen/codegen.ts && turbo build --filter='./packages/data-access-graphql'",
     ...,
 ```
 

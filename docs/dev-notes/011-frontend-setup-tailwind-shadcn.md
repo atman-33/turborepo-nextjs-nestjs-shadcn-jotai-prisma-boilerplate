@@ -33,7 +33,7 @@ npm -w packages/ui install @radix-ui/react-slot class-variance-authority clsx lu
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@ui/*": [
+      "@repo/ui/*": [
         "./src/*"
       ]
     }
@@ -265,7 +265,7 @@ export function cn(...inputs: ClassValue[]) {
     "prefix": ""
   },
   "aliases": {
-    "components": "@ui/components",
+    "components": "@repo/ui/components",
     "utils": "@repo/ui"
   }
 }

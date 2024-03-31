@@ -12,7 +12,7 @@
     "build:packages": "npx env-cmd -f .env.local turbo build --filter='./packages/*'",
     "----START----": "-------------------------",
     ...,
-    "dev": "turbo build & npx env-cmd -f .env.local turbo dev",
+    "dev": "npm run build:packages & npx env-cmd -f .env.local turbo dev",
     "dev:web": "npx env-cmd -f .env.local turbo dev --filter=web",
     "dev:api": "npm run build:packages & npx env-cmd -f .env.local turbo dev --filter=api",
 ```

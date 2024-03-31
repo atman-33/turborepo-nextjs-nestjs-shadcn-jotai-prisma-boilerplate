@@ -5,23 +5,5 @@ module.exports = {
   parser: "@typescript-eslint/parser",
   parserOptions: {
     project: true,
-  },
-  overrides: [
-    {
-      files: [
-        "*.ts",
-        "*.tsx",
-        "*.js",
-        "*.jsx"
-      ],
-      rules: {
-        'no-restricted-imports': [
-          'error',
-          {
-            patterns: ['@/features/*/*'],
-          },
-        ],
-      }
-    }
-  ]
+  }
 };

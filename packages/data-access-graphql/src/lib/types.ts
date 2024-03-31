@@ -203,12 +203,79 @@ export type StringFilter = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type GetDummiesVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetDummies = { __typename?: 'Query', dummies: Array<{ __typename?: 'Dummy', id: string, text?: string | null, int?: number | null, createdAt: any, updatedAt: any }> };
+
+export type CreateDummyVariables = Exact<{
+  data: DummyCreateInput;
+}>;
+
+
+export type CreateDummy = { __typename?: 'Mutation', createDummy: { __typename?: 'Dummy', id: string, text?: string | null, int?: number | null, createdAt: any, updatedAt: any } };
+
+export type UpdateDummyVariables = Exact<{
+  data: DummyUpdateInput;
+  where: DummyWhereUniqueInput;
+}>;
+
+
+export type UpdateDummy = { __typename?: 'Mutation', updateDummy: { __typename?: 'Dummy', id: string, text?: string | null, int?: number | null, createdAt: any, updatedAt: any } };
+
+export type DeleteDummyVariables = Exact<{
+  where: DummyWhereUniqueInput;
+}>;
+
+
+export type DeleteDummy = { __typename?: 'Mutation', deleteDummy: { __typename?: 'Dummy', id: string } };
+
 export type QueryExampleVariables = Exact<{ [key: string]: never; }>;
 
 
 export type QueryExample = { __typename?: 'Query', dummies: Array<{ __typename?: 'Dummy', id: string, text?: string | null, createdAt: any, updatedAt: any }> };
 
 
+export const GetDummiesDocument = /*#__PURE__*/ gql`
+    query getDummies {
+  dummies {
+    id
+    text
+    int
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const CreateDummyDocument = /*#__PURE__*/ gql`
+    mutation createDummy($data: DummyCreateInput!) {
+  createDummy(data: $data) {
+    id
+    text
+    int
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const UpdateDummyDocument = /*#__PURE__*/ gql`
+    mutation updateDummy($data: DummyUpdateInput!, $where: DummyWhereUniqueInput!) {
+  updateDummy(data: $data, where: $where) {
+    id
+    text
+    int
+    createdAt
+    updatedAt
+  }
+}
+    `;
+export const DeleteDummyDocument = /*#__PURE__*/ gql`
+    mutation deleteDummy($where: DummyWhereUniqueInput!) {
+  deleteDummy(where: $where) {
+    id
+  }
+}
+    `;
 export const QueryExampleDocument = /*#__PURE__*/ gql`
     query queryExample {
   dummies {
@@ -227,6 +294,18 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    getDummies(variables?: GetDummiesVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetDummies> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetDummies>(GetDummiesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'getDummies', 'query', variables);
+    },
+    createDummy(variables: CreateDummyVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<CreateDummy> {
+      return withWrapper((wrappedRequestHeaders) => client.request<CreateDummy>(CreateDummyDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'createDummy', 'mutation', variables);
+    },
+    updateDummy(variables: UpdateDummyVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<UpdateDummy> {
+      return withWrapper((wrappedRequestHeaders) => client.request<UpdateDummy>(UpdateDummyDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'updateDummy', 'mutation', variables);
+    },
+    deleteDummy(variables: DeleteDummyVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<DeleteDummy> {
+      return withWrapper((wrappedRequestHeaders) => client.request<DeleteDummy>(DeleteDummyDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'deleteDummy', 'mutation', variables);
+    },
     queryExample(variables?: QueryExampleVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<QueryExample> {
       return withWrapper((wrappedRequestHeaders) => client.request<QueryExample>(QueryExampleDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'queryExample', 'query', variables);
     }
