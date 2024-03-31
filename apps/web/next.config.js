@@ -1,4 +1,13 @@
 /** @type {import('next').NextConfig} */
 module.exports = {
-  transpilePackages: ["@repo/ui"],
+  // NOTE: インターナルパッケージは、transpilePackages に設定する
+  transpilePackages: [
+    "@repo/ui", 
+    "@repo/data-access-graphql"
+  ],
+  images: {
+    unoptimized: true,
+  },
+  output: 'export',
+  trailingSlash: true,
 };

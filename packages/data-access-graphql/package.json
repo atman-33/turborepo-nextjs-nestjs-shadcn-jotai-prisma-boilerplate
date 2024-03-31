@@ -1,0 +1,25 @@
+{
+  "name": "@repo/data-access-graphql",
+  "version": "1.0.0",
+  "description": "",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "types": "./dist/index.d.ts",
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.3"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --build --force tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "graphql-request": "^6.1.0"
+  }
+}

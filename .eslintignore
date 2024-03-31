@@ -1,0 +1,4 @@
+apps/web/postcss.config.js
+
+# schema-codegen generated files
+/tools/schema-codegen/@generated

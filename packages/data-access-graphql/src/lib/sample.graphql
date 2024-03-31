@@ -1,0 +1,8 @@
+query queryExample {
+  dummies {
+    id
+    text
+    createdAt
+    updatedAt
+  }
+}

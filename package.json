@@ -2,14 +2,33 @@
   "name": "turborepo-nextjs-nestjs-shadcn-prisma-boilerplate",
   "private": true,
   "scripts": {
-    "build": "turbo build",
-    "dev": "turbo dev",
+    "build": "npx env-cmd -f .env.local turbo build",
+    "build:packages": "npx env-cmd -f .env.local turbo build --filter='./packages/*'",
+    "----START----": "-------------------------",
+    "start:gql": "graphql-codegen --config tools/graphql-codegen/codegen.ts && turbo build --filter='./packages/data-access-graphql'",
+    "dev": "npm run build:packages & npx env-cmd -f .env.local turbo dev",
+    "dev:web": "npx env-cmd -f .env.local turbo dev --filter=web",
+    "dev:api": "npm run build:packages & npx env-cmd -f .env.local turbo dev --filter=api",
     "lint": "turbo lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "----DB SECTION----": "-------------------------",
+    "db:migrate:dev": "npx env-cmd -f .env.local npx prisma migrate dev",
+    "db:push:dev": "npx env-cmd -f .env.local npx prisma db push",
+    "db:generate": "npx env-cmd -f .env.local npx prisma generate",
+    "db:studio": "npx env-cmd -f .env.local npx prisma studio",
+    "----TOOLS SECTION----": "-------------------------",
+    "ui:add": "npm run -w @repo/ui ui:add",
+    "schema-codegen": "npx ts-node tools/schema-codegen/index.ts"
   },
   "devDependencies": {
+    "@graphql-codegen/typescript": "^4.0.6",
+    "@graphql-codegen/typescript-graphql-request": "^6.2.0",
+    "@graphql-codegen/typescript-operations": "^4.2.0",
+    "@parcel/watcher": "^2.4.1",
     "@repo/eslint-config": "*",
     "@repo/typescript-config": "*",
+    "autoprefixer": "^10.4.18",
+    "postcss": "^8.4.35",
     "prettier": "^3.2.5",
     "turbo": "latest"
   },
@@ -20,5 +39,13 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "prisma": {
+    "schema": "packages/data-access-db/src/lib/schema.prisma"
+  },
+  "dependencies": {
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/client-preset": "^4.2.5",
+    "jotai": "^2.7.2"
+  }
 }

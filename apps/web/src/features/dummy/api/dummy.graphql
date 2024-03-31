@@ -1,0 +1,35 @@
+query getDummies {
+  dummies {
+    id
+    text
+    int
+    createdAt
+    updatedAt
+  }
+}
+
+mutation createDummy($data: DummyCreateInput!) {
+  createDummy(data: $data) {
+    id
+    text
+    int
+    createdAt
+    updatedAt
+  }
+}
+
+mutation updateDummy($data: DummyUpdateInput!, $where: DummyWhereUniqueInput!) {
+  updateDummy(data: $data, where: $where) {
+    id
+    text
+    int
+    createdAt
+    updatedAt
+  }
+}
+
+mutation deleteDummy($where: DummyWhereUniqueInput!) {
+  deleteDummy(where: $where) {
+    id
+  }
+}

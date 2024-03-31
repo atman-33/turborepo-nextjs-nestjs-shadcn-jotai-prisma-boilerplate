@@ -1,0 +1,30 @@
+{
+  "name": "@repo/data-access-db",
+  "version": "1.0.0",
+  "description": "",
+  "exports": {
+    ".": "./dist/index.js"
+  },
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --build --force tsconfig.json"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/common": "^10.3.4",
+    "@nestjs/graphql": "^12.1.1",
+    "@prisma/client": "^5.11.0",
+    "graphql-type-json": "^0.3.2"
+  },
+  "devDependencies": {
+    "@repo/eslint-config": "*",
+    "@repo/typescript-config": "*",
+    "env-cmd": "^10.1.0",
+    "prisma": "^5.11.0",
+    "prisma-nestjs-graphql": "^20.0.2",
+    "typescript": "^5.4.2"
+  }
+}
