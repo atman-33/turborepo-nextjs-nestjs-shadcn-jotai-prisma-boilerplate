@@ -1,5 +1,5 @@
 {
-  "name": "turborepo-nextjs-nestjs-shadcn-prisma-boilerplate",
+  "name": "turborepo-nextjs-nestjs-shadcn-jotai-prisma-boilerplate",
   "version": "1.0.0",
   "private": true,
   "scripts": {

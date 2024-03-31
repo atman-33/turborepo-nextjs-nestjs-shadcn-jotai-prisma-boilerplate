@@ -36,8 +36,8 @@ npx create-turbo@latest
 e.g.  
 
 ```bash
-mkdir turborepo-nextjs-nestjs-shadcn-prisma-boilerplate
-cd turborepo-nextjs-nestjs-shadcn-prisma-boilerplate
+mkdir turborepo-nextjs-nestjs-shadcn-jotai-prisma-boilerplate
+cd turborepo-nextjs-nestjs-shadcn-jotai-prisma-boilerplate
 npx create-turbo@latest
 ```
 
