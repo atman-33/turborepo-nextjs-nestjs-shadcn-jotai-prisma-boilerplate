@@ -27,7 +27,6 @@
 
 ```bash
 # ルートディレクトリ
-npm run build:packages
 npm i
 ```
 
