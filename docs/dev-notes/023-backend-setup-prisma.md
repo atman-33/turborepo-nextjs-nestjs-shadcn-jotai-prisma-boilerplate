@@ -6,14 +6,23 @@
 
 ## ステップ
 
-### 1. data-access-db パッケージを追加
+### 1. data-access-db ワークスペースを作成
+
+- ワークスペース作成
 
 ```bash
 npm init -y -w packages/data-access-db
+```
+
+- パッケージ追加
+
+```bash
 npm -w packages/data-access-db install @prisma/client @nestjs/graphql graphql-type-json @nestjs/common
-npm -w packages/data-access-db install -D typescript prisma env-cmd prisma-nestjs-graphql 
+npm -w packages/data-access-db install -D typescript tsup prisma env-cmd prisma-nestjs-graphql 
 echo "public-hoist-pattern[]=*prisma*" >> .npmrc
 ```
+
+> 参考 [Bundling packages in a Monorepo](https://turbo.build/repo/docs/handbook/publishing-packages/bundling)
 
 ### 2. package.json を変更
 
@@ -25,20 +34,20 @@ echo "public-hoist-pattern[]=*prisma*" >> .npmrc
   "name": "@repo/data-access-db",
 ```
 
-- main を削除して、exports と types を修正
+- main を変更して、module と types を追加
 
 ```json
-  "exports": {
-    ".": "./dist/index.js"
-  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
 ```
 
-- scripts に build を追加
+- scripts に build と dev を追加
 
 ```json
   "scripts": {
-    "build": "tsc --build --force tsconfig.json"
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "npm run build -- --watch"
   },
 ```
 
@@ -60,8 +69,7 @@ echo "public-hoist-pattern[]=*prisma*" >> .npmrc
 {
   "extends": "@repo/typescript-config/base.json",
   "compilerOptions": {
-    "experimentalDecorators": true,
-    "outDir": "./dist",
+    "experimentalDecorators": true
   }
 }
 ```

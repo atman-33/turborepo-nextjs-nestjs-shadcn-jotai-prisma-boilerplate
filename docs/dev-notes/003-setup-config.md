@@ -9,13 +9,15 @@
 ```bash
   "scripts": {
     "build": "npx env-cmd -f .env.local turbo build",
-    "build:packages": "npx env-cmd -f .env.local turbo build --filter='./packages/*'",
+    "postbuild": "npx env-cmd -f .env.local turbo build --filter='./packages/*' & npm i",
     "----START----": "-------------------------",
     ...,
-    "dev": "npm run build:packages & npx env-cmd -f .env.local turbo dev",
+    "dev": "npm run postbuild & npx env-cmd -f .env.local turbo dev",
     "dev:web": "npx env-cmd -f .env.local turbo dev --filter=web",
-    "dev:api": "npm run build:packages & npx env-cmd -f .env.local turbo dev --filter=api",
+    "dev:api": "npm run postbuild & npx env-cmd -f .env.local turbo dev --filter=api",
 ```
+
+> postbuildは、Internal Package を利用する際に必要
 
 ### 2. web に、env 読み込みを追加
 

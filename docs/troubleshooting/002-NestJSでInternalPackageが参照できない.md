@@ -18,29 +18,31 @@ JS系のモノレポであればNxを利用するか、InternalPackageを利用�
 
 InternalPackageをJavaScriptにコンパイルしたファイルであれば、NestJSプロジェクトから参照可能となる。
 
-- ビルド時に、distフォルダにjsファイルを出力するように変更
+- tsup をワークスペースにインストール
 
-`tsconfig.json`
-
-```json
-{
-  "extends": "@repo/typescript-config/base.json",
-  "compilerOptions": {
-    "experimentalDecorators": true,
-    "outDir": "./dist",
-  }
-}
+```bash
+npm i -D tsup -w <workspace>
 ```
 
-- distに出力したindex.jsファイルをexportするように変更
+tsup では、distフォルダにファイルが出力される。
+
+- buildコマンドで、distフォルダに出力したファイルをexportするように変更
 
 `package.json`
 
 ```json
-  "exports": {
-    ".": "./dist/index.js"
-  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "npm run build -- --watch"
+  },
 ```
 
-NestJSプロジェクトから上記を設定したパッケージを読み込む際は、事前に参照するパッケージをビルドしておく。
+後は、NestJSプロジェクトを起動する前に、InternalPackageをビルドして、パッケージ追加しておけばOK  
+
+```bash
+npm run build -w <workspace>
+npm i
+```
