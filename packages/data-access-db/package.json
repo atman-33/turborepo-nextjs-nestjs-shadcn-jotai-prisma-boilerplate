@@ -2,13 +2,12 @@
   "name": "@repo/data-access-db",
   "version": "1.0.0",
   "description": "",
-  "exports": {
-    ".": "./dist/index.js"
-  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc --build --force tsconfig.json"
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "npm run build -- --watch"
   },
   "keywords": [],
   "author": "",
@@ -25,6 +24,7 @@
     "env-cmd": "^10.1.0",
     "prisma": "^5.11.0",
     "prisma-nestjs-graphql": "^20.0.2",
+    "tsup": "^8.0.2",
     "typescript": "^5.4.2"
   }
 }

@@ -10,11 +10,29 @@
 
 ## ステップ
 
-### 1. data-access-graphql パッケージを生成
+### 1. data-access-graphql ワークスペースを作成
+
+- ワークスペース作成
 
 ```bash
 npm init -y -w packages/data-access-graphql
 ```
+
+- パッケージ追加
+
+```bash
+npm -w packages/data-access-graphql i -D typescript tsup ts-node 
+npm -w packages/data-access-graphql i graphql-request
+```
+
+graphql-codegen/graphql-request用に必要  
+
+```bash
+npm i @graphql-codegen/cli @graphql-codegen/client-preset
+npm i -D @graphql-codegen/typescript @graphql-codegen/typescript-graphql-request @graphql-codegen/typescript-operations
+```
+
+### 2. package.json を変更
 
 `packages/data-access-graphql/package.json`
 
@@ -24,20 +42,20 @@ npm init -y -w packages/data-access-graphql
   "name": "@repo/data-access-graphql",
 ```
 
-- main を削除して、exports と types を修正
+- main を変更して、module と types を追加
 
 ```json
-  "exports": {
-    ".": "./dist/index.js"
-  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
 ```
 
-- scripts に build を追加
+- scripts に build と dev を追加
 
 ```json
   "scripts": {
-    "build": "tsc --build --force tsconfig.json"
+    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "dev": "npm run build -- --watch"
   },
 ```
 
@@ -51,7 +69,7 @@ npm init -y -w packages/data-access-graphql
   }
 ```
 
-### 2. tsconfig を追加
+### 3. tsconfig を追加
 
 `packages/data-access-graphql/tsconfig.json`
 
@@ -64,20 +82,6 @@ npm init -y -w packages/data-access-graphql
         "module": "commonjs",
     }
 }
-```
-
-### 3. パッケージをインストール
-
-```bash
-npm -w packages/data-access-graphql i -D typescript ts-node 
-npm -w packages/data-access-graphql i graphql-request
-```
-
-graphql-codegen/graphql-request用に必要  
-
-```bash
-npm i @graphql-codegen/cli @graphql-codegen/client-preset
-npm i -D @graphql-codegen/typescript @graphql-codegen/typescript-graphql-request @graphql-codegen/typescript-operations
 ```
 
 ### 4. codegen.yml を作成
