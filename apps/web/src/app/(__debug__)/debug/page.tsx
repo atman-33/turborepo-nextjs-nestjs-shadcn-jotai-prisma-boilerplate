@@ -1,4 +1,4 @@
-import { Link } from '@/components/elements/Link';
+import { Link } from '@/components/elements/link';
 
 const debugPages = [
   '/debug/001-shadcn-button',
