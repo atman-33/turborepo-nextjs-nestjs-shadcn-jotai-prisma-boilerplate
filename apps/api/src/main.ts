@@ -2,7 +2,7 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
-import { apiEnv } from './config';
+import { apiEnv } from './config/api-env';
 
 async function bootstrap() {
   console.log(`api process.cwd: ${process.cwd()}`);
