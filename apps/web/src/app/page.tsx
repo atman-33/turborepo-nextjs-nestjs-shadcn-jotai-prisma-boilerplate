@@ -1,4 +1,4 @@
-import { Link } from '@/components/elements/Link';
+import { Link } from '@/components/elements/link';
 import { Button } from '@repo/ui';
 
 const Page = () => {
