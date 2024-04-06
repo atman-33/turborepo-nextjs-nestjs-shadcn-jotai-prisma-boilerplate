@@ -201,7 +201,7 @@ export * from './lib/types';
 `apps/web/src/lib/graphql-client.ts`
 
 ```ts
-import { webEnv } from '@/config';
+import { webEnv } from '@/config/web-env';
 import { getGraphqlClient } from '@repo/data-access-graphql';
 
 if (!webEnv.NEXT_PUBLIC_API_GQL_URL) {
